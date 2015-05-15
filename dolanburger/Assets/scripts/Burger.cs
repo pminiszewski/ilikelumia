@@ -9,7 +9,7 @@ public enum FoodType
 	Vege
 };
 
-public class Item 
+public class Item : MonoBehaviour
 {
 	
 	public bool HasDiamond;
@@ -17,17 +17,21 @@ public class Item
 	public FoodType Type;
 }
 
+
+
 public class Burger : MonoBehaviour 
 {
 	public List<Item> Items = new List<Item>();
 
 	// Use this for initialization
-	void Start () {
+	void Start () 
+	{
 	
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void Update () 
+	{
 	
 	}
 }
