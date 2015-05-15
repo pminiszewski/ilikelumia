@@ -8,8 +8,8 @@ public class Order : MonoBehaviour
     public GameObject Plate;
     public GameObject OrderSign;
 
-    public Burger OrderedBurger;
-    public Burger OrderedRecived;
+    public Burger BurgerOrdered;
+    public Burger BurgerReceived;
 
     public Image LoafUp;
     public Image LoafDown;
@@ -100,7 +100,17 @@ public class Order : MonoBehaviour
         Free = false;
         //return this;
     }
+	public bool ValidateOrder()
+	{
+		Burger o = BurgerOrdered;
+		Burger r = BurgerReceived;
+		if(o.Items.Count != r.Items.Count)
+		{
+			return false;
+		}
 
+		foreach
+	}
     public void OrderComplete()
     {
         for (int i = 0; i < Children.Count; i++)
