@@ -39,6 +39,7 @@ public class Item : MonoBehaviour
 		{
 			yield return new WaitForSeconds(GetGrillTime());
 			Level++;
+			Debug.Log(string.Format("Grilled {0} to level {1}", FType.ToString(), Level));
 		}
 		IsBurned = true;
 		_Grill.OnItemBurned(this);
@@ -73,7 +74,13 @@ public class Item : MonoBehaviour
 
 public class Burger : MonoBehaviour 
 {
-	public List<Item> Items = new List<Item>();
+	public List<Item> Items 
+	{
+		get
+		{
+			return new List<Item>(GetComponentsInChildren<Item>());
+		}
+	}
 
 	// Use this for initialization
 	void Start () 
