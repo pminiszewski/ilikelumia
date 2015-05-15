@@ -28,7 +28,7 @@ public class Order : MonoBehaviour
 
     public void CreateOrder(Burger burger)
     {
-        OrderedBurger = burger;
+		BurgerOrdered = burger;
         for (int i = -1; i < burger.Items.Count + 1; i++)
         {
             Image food;
@@ -102,14 +102,25 @@ public class Order : MonoBehaviour
     }
 	public bool ValidateOrder()
 	{
-		Burger o = BurgerOrdered;
-		Burger r = BurgerReceived;
-		if(o.Items.Count != r.Items.Count)
+		List<Item> o = BurgerOrdered.Items;
+		List<Item> r = BurgerReceived.Items;
+		if(o.Count != r.Count)
 		{
 			return false;
 		}
 
-		foreach
+		for(int i=0;i<r.Count;i++)
+		{
+			bool t = o[i].FType == r[i].FType;
+			t &=  o[i].Level == r[i].Level;
+			t &= o[i].HasDiamond == r[i].HasDiamond;
+			if(!t)
+			{
+				return false;
+			}
+		}
+		return true;
+		
 	}
     public void OrderComplete()
     {
