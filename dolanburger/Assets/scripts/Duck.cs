@@ -26,9 +26,9 @@ public class Duck : MonoBehaviour {
     {
         duckType = GenerateDuckType();
         SetAppearance(0, 0, 0);
-	}
-	
-	void Update ()
+    }
+
+    void Update ()
     {
 	
 	}
