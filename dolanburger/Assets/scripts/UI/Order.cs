@@ -1,14 +1,17 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using System.Collections;
+using System.Collections.Generic;
 
 public class Order : MonoBehaviour
 {
+    public bool Free = true;
+
     public Image Meat;
     public Image Tomato;
     public Image Cheese;
     public Image Vege;
 
+    public List<GameObject> Children;
 
     // Use this for initialization
     void Start ()
@@ -65,14 +68,25 @@ public class Order : MonoBehaviour
                     break;
             }
             food.transform.parent = this.transform;
+            Children.Add(food.gameObject);
         }
-
 
         this.gameObject.SetActive(true);
 
+        Free = false;
         //return this;
     }
-	
+
+    public void OrderComplete()
+    {
+        for(int i = 0; i < Children.Count; i++)
+        {
+            GameObject.Destroy(Children[i]);
+        }
+        this.gameObject.SetActive(false);
+        Free = true;
+    }
+
 	// Update is called once per frame
 	void Update ()
     {
