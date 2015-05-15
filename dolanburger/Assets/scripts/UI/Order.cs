@@ -5,6 +5,11 @@ using System.Collections.Generic;
 public class Order : MonoBehaviour
 {
     public bool Free = true;
+    public GameObject Plate;
+    public GameObject OrderSign;
+
+    public Burger OrderedBurger;
+    public Burger OrderedRecived;
 
     public Image LoafUp;
     public Image LoafDown;
@@ -23,21 +28,21 @@ public class Order : MonoBehaviour
 
     public void CreateOrder(Burger burger)
     {
-
+        OrderedBurger = burger;
         for (int i = -1; i < burger.Items.Count + 1; i++)
         {
             Image food;
             if (i == -1)
             {
                 food = GameObject.Instantiate(LoafDown.gameObject).GetComponent<Image>();
-                food.rectTransform.SetParent(this.transform);
+                food.rectTransform.SetParent(OrderSign.transform);
                 Children.Add(food.gameObject);
                 continue;
             }
             else if (i == burger.Items.Count)
             {
                 food = GameObject.Instantiate(LoafUp.gameObject).GetComponent<Image>();
-                food.rectTransform.SetParent(this.transform);
+                food.rectTransform.SetParent(OrderSign.transform);
                 Children.Add(food.gameObject);
                 continue;
             }
@@ -86,7 +91,7 @@ public class Order : MonoBehaviour
                     c.g = 1.0f;
                     break;
             }
-            food.rectTransform.SetParent(this.transform);
+            food.rectTransform.SetParent(OrderSign.transform);
             Children.Add(food.gameObject);
         }
 
