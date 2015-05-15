@@ -19,7 +19,10 @@ public class Counter : MonoBehaviour
         for(int i = 0; i < 3; i++)
         {
             if (OrderList[i].Free)
+            {
                 OrderList[i].CreateOrder(newOrder);
+                break;
+            }
         }
     }
 

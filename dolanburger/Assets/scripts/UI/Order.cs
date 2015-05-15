@@ -24,7 +24,7 @@ public class Order : MonoBehaviour
 
         for(int i = 0; i < burger.Items.Count; i++)
         {
-            Image food = Meat;
+            Image food;
 
             switch (burger.Items[i].FType)
             {
@@ -38,6 +38,9 @@ public class Order : MonoBehaviour
                     food = GameObject.Instantiate(Tomato.gameObject).GetComponent<Image>();
                     break;
                 case FoodType.Vege:
+                    food = GameObject.Instantiate(Vege.gameObject).GetComponent<Image>();
+                    break;
+                default:
                     food = GameObject.Instantiate(Vege.gameObject).GetComponent<Image>();
                     break;
             }
@@ -67,7 +70,7 @@ public class Order : MonoBehaviour
                     c.g = 1.0f;
                     break;
             }
-            food.transform.parent = this.transform;
+            food.rectTransform.SetParent(this.transform);
             Children.Add(food.gameObject);
         }
 
