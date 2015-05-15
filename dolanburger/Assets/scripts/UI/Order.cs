@@ -6,6 +6,8 @@ public class Order : MonoBehaviour
 {
     public bool Free = true;
 
+    public Image LoafUp;
+    public Image LoafDown;
     public Image Meat;
     public Image Tomato;
     public Image Cheese;
@@ -14,17 +16,31 @@ public class Order : MonoBehaviour
     public List<GameObject> Children;
 
     // Use this for initialization
-    void Start ()
+    void Start()
     {
-	    
-	}
+
+    }
 
     public void CreateOrder(Burger burger)
     {
 
-        for(int i = 0; i < burger.Items.Count; i++)
+        for (int i = -1; i < burger.Items.Count + 1; i++)
         {
             Image food;
+            if (i == -1)
+            {
+                food = GameObject.Instantiate(LoafDown.gameObject).GetComponent<Image>();
+                food.rectTransform.SetParent(this.transform);
+                Children.Add(food.gameObject);
+                continue;
+            }
+            else if (i == burger.Items.Count)
+            {
+                food = GameObject.Instantiate(LoafUp.gameObject).GetComponent<Image>();
+                food.rectTransform.SetParent(this.transform);
+                Children.Add(food.gameObject);
+                continue;
+            }
 
             switch (burger.Items[i].FType)
             {
@@ -82,7 +98,7 @@ public class Order : MonoBehaviour
 
     public void OrderComplete()
     {
-        for(int i = 0; i < Children.Count; i++)
+        for (int i = 0; i < Children.Count; i++)
         {
             GameObject.Destroy(Children[i]);
         }
@@ -90,9 +106,9 @@ public class Order : MonoBehaviour
         Free = true;
     }
 
-	// Update is called once per frame
-	void Update ()
+    // Update is called once per frame
+    void Update()
     {
-	
-	}
+
+    }
 }
