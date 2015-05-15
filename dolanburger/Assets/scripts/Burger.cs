@@ -93,4 +93,9 @@ public class Burger : MonoBehaviour
 	{
 	
 	}
+
+	public void AddItem(Item i)
+	{
+		i.transform.parent = transform;
+	}
 }

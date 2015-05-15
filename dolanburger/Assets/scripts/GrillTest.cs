@@ -9,14 +9,33 @@ public class GrillTest : MonoBehaviour
 	{
 		Grill g = GameObject.FindObjectOfType<Grill>();
 
+
+		//g.AddToGrill(CreateRandomItem());
+
+		CreateRandomBurger();
+
+
+	}
+	public static Burger CreateRandomBurger()
+	{
+		GameObject go = new GameObject();
+		Burger b =  go.AddComponent<Burger>();
+		for(int i=0; i<UnityEngine.Random.Range(3,6); i++)
+		{
+			Item it = CreateRandomItem();
+			b.AddItem(it);
+		}
+		return b;
+	}
+	public static Item CreateRandomItem()
+	{
 		GameObject go = new GameObject();
 		Item i =  go.AddComponent<Item>();
 		Array values = Enum.GetValues(typeof(FoodType));
-
+		
 		FoodType randomBar = (FoodType)values.GetValue(UnityEngine.Random.Range(0, values.Length -1));
 		i.FType = randomBar;
 		go.name = "Item_"+randomBar.ToString();
-		g.AddToGrill(i);
-
+		return i;
 	}
 }
