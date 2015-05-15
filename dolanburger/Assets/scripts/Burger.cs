@@ -44,7 +44,7 @@ public class Item : MonoBehaviour
 
 	private float GetGrillTime()
 	{
-		int t;
+		float t = 0f;
 		switch (FType)
 		{
 		case FoodType.Cheese:

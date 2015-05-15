@@ -4,3 +4,5 @@ dolanburger/Temp
 *.sln
 *.sln
 dolanburger/Assets/UnityVS/
+/dolanburger/.vs/UnityVS.dolanburger/v14/*.suo
+/dolanburger/Assets/UnityVS.meta
