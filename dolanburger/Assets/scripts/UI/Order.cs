@@ -28,7 +28,7 @@ public class Order : MonoBehaviour
 
     public void CreateOrder(Burger burger)
     {
-        OrderedBurger = burger;
+        BurgerOrdered = burger;
         for (int i = -1; i < burger.Items.Count + 1; i++)
         {
             Image food;
@@ -99,6 +99,7 @@ public class Order : MonoBehaviour
 
         Free = false;
     }
+
 	public bool ValidateOrder()
 	{
 		Burger o = BurgerOrdered;
@@ -107,9 +108,10 @@ public class Order : MonoBehaviour
 		{
 			return false;
 		}
+        return false;
 
-		foreach
-	}
+
+    }
     public void OrderComplete()
     {
         for (int i = 0; i < Children.Count; i++)
