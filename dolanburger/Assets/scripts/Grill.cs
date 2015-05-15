@@ -22,12 +22,14 @@ public class Grill : MonoBehaviour
 		if(!Items.Contains())
 		{
 			Items.Add(item);
+			item.Grill();
 		}
 	}
 
 	public void RemoveFromGrill(Item item)
 	{
 		Items.Remove(item);
+		item.Stop();
 	}
 
 	public void OnItemBurned(Item item)

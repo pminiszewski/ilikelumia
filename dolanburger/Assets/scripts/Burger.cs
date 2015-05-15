@@ -16,6 +16,7 @@ public class Item : MonoBehaviour
 	public bool HasDiamond;
 	public int Level;
 	public FoodType FType;
+	public bool IsBurned;
 	private Grill _Grill;
 
 	public void Grill(Grill g)
@@ -37,6 +38,8 @@ public class Item : MonoBehaviour
 			yield return new WaitForSeconds(GetGrillTime());
 			Level++;
 		}
+		IsBurned = true;
+		_Grill.OnItemBurned(this);
 	}
 
 	private float GetGrillTime()
