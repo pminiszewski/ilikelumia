@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 
@@ -95,11 +95,11 @@ public class Order : MonoBehaviour
             Children.Add(food.gameObject);
         }
 
-        this.gameObject.SetActive(true);
+        OrderSign.gameObject.SetActive(true);
 
         Free = false;
-        //return this;
     }
+
 	public bool ValidateOrder()
 	{
 		List<Item> o = BurgerOrdered.Items;
@@ -108,20 +108,10 @@ public class Order : MonoBehaviour
 		{
 			return false;
 		}
+        return false;
 
-		for(int i=0;i<r.Count;i++)
-		{
-			bool t = o[i].FType == r[i].FType;
-			t &=  o[i].Level == r[i].Level;
-			t &= o[i].HasDiamond == r[i].HasDiamond;
-			if(!t)
-			{
-				return false;
-			}
-		}
-		return true;
-		
-	}
+
+    }
     public void OrderComplete()
     {
         for (int i = 0; i < Children.Count; i++)
@@ -130,6 +120,11 @@ public class Order : MonoBehaviour
         }
         this.gameObject.SetActive(false);
         Free = true;
+    }
+
+    public void AddToPlate(Item item)
+    {
+        
     }
 
     // Update is called once per frame
