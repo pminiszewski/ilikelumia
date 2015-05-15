@@ -1,28 +1,34 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System;
 
 
 public class Counter : MonoBehaviour
 {
     public List<Order> OrderList;
-    int _OrderCount;
 
 	// Use this for initialization
 	void Start ()
     {
-	    
-	}
+        AddOrder(GrillTest.CreateRandomBurger());
+    }
 	
     public void AddOrder(Burger newOrder)
     {
-
-        OrderList[_OrderCount].CreateOrder(newOrder);
-        _OrderCount++;
+        for(int i = 0; i < 3; i++)
+        {
+            if (OrderList[i].Free)
+            {
+                OrderList[i].CreateOrder(newOrder);
+                break;
+            }
+        }
     }
 
-    public void OrderComplete(Burger order)
+    public void OrderComplete(Order order)
     {
+        order.OrderComplete();
     }
 
     public void ShowOrder()

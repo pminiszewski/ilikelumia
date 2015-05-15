@@ -1,14 +1,17 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using System.Collections;
+using System.Collections.Generic;
 
 public class Order : MonoBehaviour
 {
+    public bool Free = true;
+
     public Image Meat;
     public Image Tomato;
     public Image Cheese;
     public Image Vege;
 
+    public List<GameObject> Children;
 
     // Use this for initialization
     void Start ()
@@ -21,7 +24,7 @@ public class Order : MonoBehaviour
 
         for(int i = 0; i < burger.Items.Count; i++)
         {
-            Image food = Meat;
+            Image food;
 
             switch (burger.Items[i].FType)
             {
@@ -35,6 +38,9 @@ public class Order : MonoBehaviour
                     food = GameObject.Instantiate(Tomato.gameObject).GetComponent<Image>();
                     break;
                 case FoodType.Vege:
+                    food = GameObject.Instantiate(Vege.gameObject).GetComponent<Image>();
+                    break;
+                default:
                     food = GameObject.Instantiate(Vege.gameObject).GetComponent<Image>();
                     break;
             }
@@ -64,15 +70,26 @@ public class Order : MonoBehaviour
                     c.g = 1.0f;
                     break;
             }
-            food.transform.parent = this.transform;
+            food.rectTransform.SetParent(this.transform);
+            Children.Add(food.gameObject);
         }
-
 
         this.gameObject.SetActive(true);
 
+        Free = false;
         //return this;
     }
-	
+
+    public void OrderComplete()
+    {
+        for(int i = 0; i < Children.Count; i++)
+        {
+            GameObject.Destroy(Children[i]);
+        }
+        this.gameObject.SetActive(false);
+        Free = true;
+    }
+
 	// Update is called once per frame
 	void Update ()
     {
