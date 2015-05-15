@@ -95,10 +95,9 @@ public class Order : MonoBehaviour
             Children.Add(food.gameObject);
         }
 
-        this.gameObject.SetActive(true);
+        OrderSign.gameObject.SetActive(true);
 
         Free = false;
-        //return this;
     }
 
     public void OrderComplete()
@@ -109,6 +108,11 @@ public class Order : MonoBehaviour
         }
         this.gameObject.SetActive(false);
         Free = true;
+    }
+
+    public void AddToPlate(Item item)
+    {
+        
     }
 
     // Update is called once per frame
