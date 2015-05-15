@@ -13,7 +13,7 @@ public class Order : MonoBehaviour
     // Use this for initialization
     void Start ()
     {
-	
+	    
 	}
 
     public void CreateOrder(Burger burger)
