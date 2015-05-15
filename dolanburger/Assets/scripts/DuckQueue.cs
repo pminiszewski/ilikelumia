@@ -12,6 +12,8 @@ public class DuckQueue : MonoBehaviour {
     float nextDuckSpawnTime = 0;
 
     [SerializeField] GameObject duckPrefab;
+    [SerializeField] Vector3[] ducksSittingPositions;
+    Transform canvas;
 
     // place on the table, duck
     Dictionary<int, GameObject> duckList = new Dictionary<int, GameObject>();
@@ -19,6 +21,7 @@ public class DuckQueue : MonoBehaviour {
 
 	void Start()
     {
+        canvas = GameObject.Find("Canvas").transform;
         nextDuckSpawnTime = Time.realtimeSinceStartup + minDuckSpawnDelay;
 	}
 	
@@ -38,7 +41,8 @@ public class DuckQueue : MonoBehaviour {
         GameObject duckObject = duckList[freePlace] = GameObject.Instantiate(duckPrefab);
         Duck duck = duckObject.GetComponent<Duck>();
 
-        duckObject.transform.parent = gameObject.transform;
+        duckObject.transform.SetParent(canvas.transform);
+        duckObject.transform.position = ducksSittingPositions[freePlace];
     }
 
     void RemoveDuck(int i)
@@ -50,7 +54,7 @@ public class DuckQueue : MonoBehaviour {
     {
         for (int i = 0; i < queueLimit; i++)
         {
-            if (duckList.ContainsKey(i))
+            if (!duckList.ContainsKey(i))
                 return i;
         }
         return 0;
