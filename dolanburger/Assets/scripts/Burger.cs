@@ -22,12 +22,14 @@ public class Item : MonoBehaviour
 	public void Grill(Grill g)
 	{
 		_Grill = g;
+		transform.parent = g.transform;
 		StartCoroutine(Grilling());
 	}
 
 	public void Stop()
 	{
 		_Grill = null;
+		transform.parent = null;
 		StopAllCoroutines();
 	}
 
@@ -44,7 +46,7 @@ public class Item : MonoBehaviour
 
 	private float GetGrillTime()
 	{
-		int t;
+		float t = 0;
 		switch (FType)
 		{
 		case FoodType.Cheese:

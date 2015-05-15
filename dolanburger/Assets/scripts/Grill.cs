@@ -3,7 +3,13 @@ using System.Collections.Generic;
 
 public class Grill : MonoBehaviour 
 {
-	public List<Item> Items = new List<Item>();
+	public List<Item> Items
+	{
+		get
+		{
+			return new List<Item>(GetComponentsInChildren<Item>());
+		}
+	}
 
 	// Use this for initialization
 	void Start () 
@@ -19,10 +25,10 @@ public class Grill : MonoBehaviour
 
 	public void AddToGrill(Item item)
 	{
-		if(!Items.Contains())
+		if(!Items.Contains(item))
 		{
 			Items.Add(item);
-			item.Grill();
+			item.Grill(this);
 		}
 	}
 
