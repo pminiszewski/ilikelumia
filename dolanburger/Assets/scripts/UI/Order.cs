@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
@@ -163,9 +163,26 @@ public class Order : MonoBehaviour, IObjectDropHandler
             t &= o[i].HasDiamond == r[i].HasDiamond;
 			Debug.Log(string.Format("o.HasDiamond={0}, r.HasDiamond={1}",o[i].HasDiamond, r[i].HasDiamond ));
             if (!t)
-            {
                 return false;
-            }
+            if (r[i].HasDiamond)
+                hasDiamonds = true;
+        }
+        switch (_Duck.duckType)
+        {
+            case Duck.DuckType.Normal:
+                if (hasDiamonds)
+                    GameState.score -= 200;
+                break;
+            case Duck.DuckType.Mafia:
+                if (hasDiamonds)
+                    GameState.score += 200;
+                break;
+            case Duck.DuckType.Police:
+                if (hasDiamonds)
+                    GameState.score -= 500;
+                break;
+            default:
+                break;
         }
         return true;
     }

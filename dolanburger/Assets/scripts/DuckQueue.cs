@@ -5,16 +5,18 @@ using System.Collections.Generic;
 
 public class DuckQueue : MonoBehaviour {
 
+    bool isStarted = false;
     int queueLimit = 3;
     int currNrOfDucks = 0;
 
-    float minDuckSpawnDelay = 1f;
-    float maxDuckSpawnBias = 1f;
+    float minDuckSpawnDelay = 10f;
+    float maxDuckSpawnBias = 10;
     float nextDuckSpawnTime = 0;
 
     [SerializeField] GameObject scoreCard;
     [SerializeField] GameObject duckPrefab;
     [SerializeField] Vector3[] ducksSittingPositions;
+    [SerializeField] Vector3[] scoreCardsPositions;
     Transform canvas;
     Counter counter;
 
@@ -24,16 +26,36 @@ public class DuckQueue : MonoBehaviour {
 
 	void Start()
     {
+        isStarted = true;
         counter = FindObjectOfType<Counter>();
         canvas = GameObject.Find("Canvas").transform;
-        nextDuckSpawnTime = Time.realtimeSinceStartup + minDuckSpawnDelay;
-	}
-	
-	void Update()
+        nextDuckSpawnTime = Time.realtimeSinceStartup + 2.0f;
+
+        for (int i = 0; i < 3; i++)
+        {
+            Vector3 cardPos = scoreCardsPositions[i];
+            GameObject currDuckScoreCard = GameObject.Instantiate(scoreCard);
+            currDuckScoreCard.transform.SetParent(canvas.transform);
+            currDuckScoreCard.transform.position = cardPos;
+            // set sprite
+            currDuckScoreCard.GetComponent<Image>().sprite = Resources.Load<Sprite>("UI_fail");
+        }
+}
+
+void Update()
     {
+        if (!isStarted)
+            return;
+
         if (IsReadyToSpawn())
             SpawnDuck();
 	}
+
+    void StartQueue()
+    {
+        nextDuckSpawnTime = Time.realtimeSinceStartup + minDuckSpawnDelay;
+        isStarted = true;
+    }
 
     void SpawnDuck()
     {
@@ -87,7 +109,7 @@ public class DuckQueue : MonoBehaviour {
 
     public void ShowCard(Duck duck)
     {
-        Vector3 cardPos = ducksSittingPositions[duck.PlaceIndex] + new Vector3(200, 300, 0);
+        Vector3 cardPos = scoreCardsPositions[duck.PlaceIndex];
         GameObject currDuckScoreCard = GameObject.Instantiate(scoreCard);
         currDuckScoreCard.transform.SetParent(canvas.transform);
         currDuckScoreCard.transform.position = cardPos;

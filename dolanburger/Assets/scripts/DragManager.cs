@@ -78,7 +78,7 @@ public class DragManager : MonoBehaviour {
 
 		var detected = currentlyOver.gameObject.GetComponent<IObjectDropHandler> ();
 		if (detected == null) {
-			Debug.LogError("NIE MA!");
+			//Debug.LogError("NIE MA!");
 			draggedObj.transform.position = dragStartedFrom;
 			DestroyObject(draggedObj);
 			draggedObj = null;
@@ -99,6 +99,7 @@ public class DragManager : MonoBehaviour {
 		var detected = currentlyOver.gameObject.GetComponent<IObjectDropHandler> ();
 		if (detected == null) {
 			draggedObj.transform.position = dragStartedFrom;
+			Destroy(draggedObj);
 			draggedObj = null;
 			return;
 		}
