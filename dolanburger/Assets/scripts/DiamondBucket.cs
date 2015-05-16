@@ -2,9 +2,9 @@
 using System.Collections;
 using UnityEngine.UI;
 
-public class DiamondBucket : MonoBehaviour 
+public class Bucket : MonoBehaviour 
 {
-	public Item ItemPrefab;
+	public Diamond ItemPrefab;
 	public FoodType BucketType;
 
 
@@ -13,7 +13,7 @@ public class DiamondBucket : MonoBehaviour
 		GameObject go = Instantiate<GameObject>(ItemPrefab.gameObject);
 		Item i = go.GetComponent<Item>();
 		go.name = "Item_"+i.FType.ToString();
-		i.transform.SetParent( transform);
+		i.transform.parent = transform;
 		return go;
 	}
 
