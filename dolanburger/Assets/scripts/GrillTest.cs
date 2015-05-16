@@ -27,8 +27,6 @@ public class GrillTest : MonoBehaviour
 			Item it = CreateRandomItem();
 			b.AddItem(it);
 		}
-        // set variables
-        b.wantedLevel = UnityEngine.Random.Range(0, 3);
 		return b;
 	}
 	public static Item CreateRandomItem()
