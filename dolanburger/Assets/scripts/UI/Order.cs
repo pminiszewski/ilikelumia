@@ -35,6 +35,7 @@ public class Order : MonoBehaviour, IObjectDropHandler
     public Image Foodtype;
 
     public Image BurgerBottom;
+    public Image BurgerTop;
 
     public List<GameObject> Children;
     public List<Image> PlateList;
@@ -166,8 +167,12 @@ public class Order : MonoBehaviour, IObjectDropHandler
         }
         for (int i = 0; i < PlateList.Count; i++)
         {
-            GameObject.Destroy(PlateList[i]);
+            GameObject.Destroy(PlateList[i].gameObject);
         }
+
+        Children.Clear();
+        PlateList.Clear();
+
         OrderSign.gameObject.SetActive(false);
         BurgerReceived.gameObject.SetActive(false);
         Free = true;
@@ -176,6 +181,12 @@ public class Order : MonoBehaviour, IObjectDropHandler
 
     public void AddToPlate(Item item)
     {
+        if (BurgerReceived.Items.Count == BurgerOrdered.Items.Count)
+        {
+            AddLoafToPlate(BurgerTop);
+            return;
+        }
+
         Image food;
         switch(item.FType)
         {
@@ -216,6 +227,7 @@ public class Order : MonoBehaviour, IObjectDropHandler
         food.rectTransform.SetParent(Plate.transform);
         food.rectTransform.anchoredPosition = new Vector2(0, ItemsOnPlateOffset);
         BurgerReceived.Items.Add(item);
+        PlateList.Add(food);
         ItemsOnPlateOffset += 25;
     }
 
