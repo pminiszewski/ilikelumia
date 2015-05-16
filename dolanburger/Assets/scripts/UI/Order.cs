@@ -184,6 +184,7 @@ public class Order : MonoBehaviour
         img.rectTransform.SetParent(Plate.transform);
         img.rectTransform.anchoredPosition = Vector2.zero;
         ItemsOnPlateOffset = 20;
+        PlateList.Add(img);
     }
 
     // Update is called once per frame
