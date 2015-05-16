@@ -16,6 +16,7 @@ public class DuckQueue : MonoBehaviour {
     [SerializeField] GameObject scoreCard;
     [SerializeField] GameObject duckPrefab;
     [SerializeField] Vector3[] ducksSittingPositions;
+    [SerializeField] Vector3[] scoreCardsPositions;
     Transform canvas;
     Counter counter;
 
@@ -29,9 +30,19 @@ public class DuckQueue : MonoBehaviour {
         counter = FindObjectOfType<Counter>();
         canvas = GameObject.Find("Canvas").transform;
         nextDuckSpawnTime = Time.realtimeSinceStartup + 2.0f;
-	}
-	
-	void Update()
+
+        for (int i = 0; i < 3; i++)
+        {
+            Vector3 cardPos = scoreCardsPositions[i];
+            GameObject currDuckScoreCard = GameObject.Instantiate(scoreCard);
+            currDuckScoreCard.transform.SetParent(canvas.transform);
+            currDuckScoreCard.transform.position = cardPos;
+            // set sprite
+            currDuckScoreCard.GetComponent<Image>().sprite = Resources.Load<Sprite>("UI_fail");
+        }
+}
+
+void Update()
     {
         if (!isStarted)
             return;
@@ -98,7 +109,7 @@ public class DuckQueue : MonoBehaviour {
 
     public void ShowCard(Duck duck)
     {
-        Vector3 cardPos = ducksSittingPositions[duck.PlaceIndex] + new Vector3(200, 300, 0);
+        Vector3 cardPos = scoreCardsPositions[duck.PlaceIndex];
         GameObject currDuckScoreCard = GameObject.Instantiate(scoreCard);
         currDuckScoreCard.transform.SetParent(canvas.transform);
         currDuckScoreCard.transform.position = cardPos;
