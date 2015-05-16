@@ -74,7 +74,7 @@ public class Order : MonoBehaviour, IObjectDropHandler
         }
         
         BurgerOrdered = duck.burger;
-        AddLoafToPlate(BurgerBottom, Vector2.zero);
+        AddLoafToPlate(BurgerBottom, new Vector2(0, 20));
         BurgerRecivedObj = GameObject.Instantiate(BurgerReceived) as Burger;
         BurgerRecivedObj.name = "RecivedBurger";
         BurgerRecivedObj.transform.parent = Plate.transform;
@@ -273,7 +273,7 @@ public class Order : MonoBehaviour, IObjectDropHandler
         Image img = GameObject.Instantiate(loaf.gameObject).GetComponent<Image>();
         img.rectTransform.SetParent(Plate.transform);
         img.rectTransform.anchoredPosition = offset;
-        ItemsOnPlateOffset = 10;
+        ItemsOnPlateOffset = 5;
         PlateList.Add(img);
     }
 

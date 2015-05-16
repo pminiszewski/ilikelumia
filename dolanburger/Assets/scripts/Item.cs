@@ -21,15 +21,19 @@ public class Item : MonoBehaviour, IObjectDropHandler
 	public Sprite Vege2Image;
 	public Sprite Vege3Image;
 	public Sprite Vege4Image;
+    public Sprite Diamond1;
+    public Sprite Diamond2;
+    public Sprite Diamond3;
+    public Sprite Diamond4;
 
-	public bool HasDiamond;
+    public bool HasDiamond;
 	public int Level;
 	public FoodType FType;
 	public bool IsBurned;
 	private Grill _Grill;
 
 	public DragManager dManager;
-	
+    public bool ThisIsDiaaaamond;
 	public void Grill(Grill g)
 	{
 		_Grill = g;
@@ -43,10 +47,14 @@ public class Item : MonoBehaviour, IObjectDropHandler
 	}
 	void Start()
 	{
-		GetComponent<Image>().sprite = GetFoodImage();
+        if(!ThisIsDiaaaamond)
+		    GetComponent<Image>().sprite = GetFoodImage();
 	}
 	private IEnumerator Grilling()
 	{
+        if (ThisIsDiaaaamond)
+            yield break;
+
 		while(Level < 3)
 		{
 			yield return new WaitForSeconds(GetGrillTime());
@@ -103,6 +111,29 @@ public class Item : MonoBehaviour, IObjectDropHandler
 			Debug.Log("Added diamond");
 		}
 	}
+
+    public Sprite GetDiamondImage()
+    {
+        Sprite ret = null;
+        int diamondN = Random.Range(0, 4);
+
+        switch(diamondN)
+        {
+            case 0:
+                ret = Diamond1;
+                break;
+            case 1:
+                ret = Diamond2;
+                break;
+            case 2:
+                ret = Diamond3;
+                break;
+            case 3:
+                ret = Diamond4;
+                break;
+        }
+        return ret;
+    }
 
 	public Sprite GetFoodImage()
 	{
