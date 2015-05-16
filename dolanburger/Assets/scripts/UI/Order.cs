@@ -114,6 +114,7 @@ public class Order : MonoBehaviour
     }
     public void OrderComplete()
     {
+		
         for (int i = 0; i < Children.Count; i++)
         {
             GameObject.Destroy(Children[i]);
