@@ -48,7 +48,7 @@ public class Duck : MonoBehaviour {
 
     DuckType GenerateDuckType()
     {
-        DuckType duckType = (DuckType)Random.Range(0, 2);
+        DuckType duckType = (DuckType)Random.Range(0, 3);
         return duckType;
     }
 
