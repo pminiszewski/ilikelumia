@@ -1,10 +1,27 @@
 fileFormatVersion: 2
 guid: f4e7b33b77b4c48ac858ec04401339dc
-timeCreated: 1431730285
+timeCreated: 1431747796
 licenseType: Free
 MonoImporter:
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - Meat1Image: {fileID: 21300000, guid: f88bfd2b5ba715a48a5b9c117432319c, type: 3}
+  - Meat2Image: {fileID: 21300000, guid: 05a4227407e4de249a0af1ac2a406d47, type: 3}
+  - Meat3Image: {fileID: 21300000, guid: 6572059ec58cccb449a7dd04ab3b2a02, type: 3}
+  - Meat4Image: {fileID: 21300000, guid: ac6668020d62ce4438ed42fcea0a19bf, type: 3}
+  - Cheese1Image: {fileID: 21300000, guid: b3372d276c9cefe468138d39ca7c674c, type: 3}
+  - Cheese2Image: {fileID: 21300000, guid: e7a614a5c26037647bc04a8f3573047b, type: 3}
+  - Cheese3Image: {fileID: 21300000, guid: bce33b505f8d9e846b8fd03c2989ef84, type: 3}
+  - Cheese4Image: {fileID: 21300000, guid: 4f45e3f366dd9c34480748384007aac0, type: 3}
+  - Tomato1Image: {fileID: 21300000, guid: defa0cd39e64931468d5191b46344954, type: 3}
+  - Tomato2Image: {fileID: 21300000, guid: 87564c7dd8edbe24db2c638e2a8f282e, type: 3}
+  - Tomato3Image: {fileID: 21300000, guid: 8c3818af85972c64eb92e17acb0aad16, type: 3}
+  - Tomato4Image: {fileID: 21300000, guid: 75b3669a70b66924aa32c17ddacb7c26, type: 3}
+  - Vege1Image: {fileID: 21300000, guid: 5195ac298a1460d45a04060e51b87fdd, type: 3}
+  - Vege2Image: {fileID: 21300000, guid: 87564c7dd8edbe24db2c638e2a8f282e, type: 3}
+  - Vege3Image: {fileID: 21300000, guid: 8c3818af85972c64eb92e17acb0aad16, type: 3}
+  - Vege4Image: {fileID: 21300000, guid: 75b3669a70b66924aa32c17ddacb7c26, type: 3}
+  - dManager: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

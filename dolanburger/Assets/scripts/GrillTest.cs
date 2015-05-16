@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System;
+using UnityEngine.UI;
 
 public class GrillTest : MonoBehaviour 
 {
@@ -38,6 +39,8 @@ public class GrillTest : MonoBehaviour
 		
 		FoodType randomBar = (FoodType)values.GetValue(UnityEngine.Random.Range(0, values.Length -1));
 		i.FType = randomBar;
+
+		go.AddComponent<Image>().sprite = i.GetFoodImage();
 		go.name = "Item_"+randomBar.ToString();
 		return i;
 	}
