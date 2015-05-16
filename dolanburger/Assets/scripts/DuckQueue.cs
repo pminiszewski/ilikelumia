@@ -100,7 +100,7 @@ public class DuckQueue : MonoBehaviour {
 
     IEnumerator ShowingCard(GameObject obj)
     {
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(2);
         print("destroy card");
         Destroy(obj);
     }
