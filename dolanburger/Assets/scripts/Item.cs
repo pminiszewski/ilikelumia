@@ -9,6 +9,8 @@ public class Item : MonoBehaviour
 	public FoodType FType;
 	public bool IsBurned;
 	private Grill _Grill;
+
+	public DragManager dManager;
 	
 	public void Grill(Grill g)
 	{
@@ -56,5 +58,15 @@ public class Item : MonoBehaviour
 		}
 		
 		return t;
+	}
+
+	public void DragBegin()
+	{
+		dManager.DragBegin ();
+	}
+
+	public void DragEnd()
+	{
+		dManager.DragEnd ();
 	}
 }

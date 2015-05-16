@@ -22,7 +22,6 @@ public class DragManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-	
 	}
 	
 	// Update is called once per frame
@@ -43,15 +42,35 @@ public class DragManager : MonoBehaviour {
 		}
 	}
 
-	public void DragBegin() 
+	public void DragBeginBucket() 
 	{
-
-		
 		//draggedObj = currentlyOver;
 		draggedObj = currentlyOver.gameObject.GetComponent<Bucket> ().OnSpawnItem ();
 
+
 		dragStartedFrom = currentlyOver.gameObject.transform.position;
 		draggedObj.gameObject.transform.SetParent (ContainerForDragging.transform);
+
+		var item = draggedObj.gameObject.GetComponent<Item> ();
+		item.dManager = this;
+		//EventTriggerType ett = new EventTriggerType ();
+		//draggedObj.gameObject.GetComponent<EventTrigger> ().delegates [0].eventID = new EventTriggerType ();
+		//
+		//draggedObj.gameObject.GetComponent<EventTrigger> ().delegates [0].callback.AddListener(delegate {DragBegin();} );//(() => { DragBegin(); });
+		//draggedObj.gameObject.GetComponent<EventTrigger> ().delegates [1].callback.AddListener(delegate {DragEnd();} );
+
+		dragStarted = true;
+	}
+
+	public void DragBegin() 
+	{
+		draggedObj = currentlyOver;
+		dragStartedFrom = currentlyOver.gameObject.transform.position;
+		draggedObj.gameObject.transform.SetParent (ContainerForDragging.transform);
+		
+		var item = draggedObj.gameObject.GetComponent<Item> ();
+		item.dManager = this;
+
 		dragStarted = true;
 	}
 	
