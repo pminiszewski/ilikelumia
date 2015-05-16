@@ -29,6 +29,7 @@ public class Order : MonoBehaviour, IObjectDropHandler
 
     public Burger BurgerOrdered;
     public Burger BurgerReceived;
+    public Burger BurgerRecivedObj;
 
     public Image LoafUp;
     public Image LoafDown;
@@ -69,10 +70,11 @@ public class Order : MonoBehaviour, IObjectDropHandler
         {
             Colors.Add(hexToColor(ColorCode[i]));
         }
-
+        BurgerRecivedObj = GameObject.Instantiate(BurgerReceived) as Burger;
+        BurgerRecivedObj.transform.parent = Plate.transform;
         BurgerOrdered = duck.burger;
         AddLoafToPlate(BurgerBottom);
-        BurgerReceived.gameObject.SetActive(true);
+        BurgerRecivedObj.gameObject.SetActive(true);
 
         for (int i = -1; i < duck.burger.Items.Count + 1; i++)
         {
@@ -137,7 +139,7 @@ public class Order : MonoBehaviour, IObjectDropHandler
 	public bool ValidateOrder()
 	{
 		List<Item> o = BurgerOrdered.Items;
-		List<Item> r = BurgerReceived.Items;
+		List<Item> r = BurgerRecivedObj.Items;
 		if(o.Count != r.Count)
 		{
 			return false;
@@ -178,7 +180,7 @@ public class Order : MonoBehaviour, IObjectDropHandler
         PlateList.Clear();
 
         OrderSign.gameObject.SetActive(false);
-        BurgerReceived.gameObject.SetActive(false);
+        BurgerRecivedObj.gameObject.SetActive(false);
         Free = true;
         Queue.RemoveDuck(_Duck);
     }
@@ -187,8 +189,8 @@ public class Order : MonoBehaviour, IObjectDropHandler
 
     public void AddToPlate(Item item)
     {
-        Debug.Log(BurgerReceived.Items.Count);
-        if (BurgerReceived.Items.Count == BurgerOrdered.Items.Count)
+        Debug.Log(BurgerRecivedObj.Items.Count);
+        if (BurgerRecivedObj.Items.Count == BurgerOrdered.Items.Count)
         {
             if (!BurgerComplete)
             {
@@ -236,7 +238,7 @@ public class Order : MonoBehaviour, IObjectDropHandler
         }
 
         food.rectTransform.anchoredPosition = new Vector2(0, ItemsOnPlateOffset);
-        item.transform.SetParent(BurgerReceived.transform);
+        food.transform.parent = BurgerRecivedObj.transform;
         PlateList.Add(food);
         ItemsOnPlateOffset += 25;
     }
