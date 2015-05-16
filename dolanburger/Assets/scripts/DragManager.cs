@@ -72,18 +72,37 @@ public class DragManager : MonoBehaviour {
 	{
 		dragStarted = false;
 
-		if (currentlyOver.gameObject == FailStateObject) {
+		var detected = currentlyOver.gameObject.GetComponent<IObjectDropHandler> ();
+		if (detected == null) {
 			draggedObj.transform.position = dragStartedFrom;
 			DestroyObject(draggedObj);
 			draggedObj = null;
 			return;
 		}
-
-		currentlyOver.gameObject.GetComponent<IObjectDropHandler> ().HandleDrop(draggedObj);
+		
+		detected.HandleDrop(draggedObj);
 
 		draggedObj.gameObject.transform.SetParent (currentlyOver.transform);
 		draggedObj = null;
 
+	}
+
+	public void DragEndFromGrill() 
+	{
+		dragStarted = false;
+
+		var detected = currentlyOver.gameObject.GetComponent<IObjectDropHandler> ();
+		if (detected == null) {
+			draggedObj.transform.position = dragStartedFrom;
+			draggedObj = null;
+			return;
+		}
+
+		detected.HandleDrop(draggedObj);
+
+		draggedObj.gameObject.transform.SetParent (currentlyOver.transform);
+		draggedObj = null;
+		
 	}
 	
 	public void POver (int i = 0)
