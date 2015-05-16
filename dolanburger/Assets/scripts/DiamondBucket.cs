@@ -5,7 +5,6 @@ using UnityEngine.UI;
 public class DiamondBucket : MonoBehaviour 
 {
 	public Diamond ItemPrefab;
-	public FoodType BucketType;
 
 
 	public GameObject OnSpawnItem()

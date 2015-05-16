@@ -3,6 +3,5 @@ using System.Collections;
 
 public class Diamond : MonoBehaviour {
 
-	public FoodType foodType;
 
 }
