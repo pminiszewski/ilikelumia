@@ -1,0 +1,4 @@
+cheese:	f6f229 	f0cf2e 	f2a92c
+green:	069743 	108341 	166424
+meat:	cc64a7 	89193a  3b1a0c
+tomato:	e00f16 	cf2921  a4321c
