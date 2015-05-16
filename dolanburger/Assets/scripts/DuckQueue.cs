@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 public class DuckQueue : MonoBehaviour {
 
+    bool isStarted = false;
     int queueLimit = 3;
     int currNrOfDucks = 0;
 
@@ -31,9 +32,18 @@ public class DuckQueue : MonoBehaviour {
 	
 	void Update()
     {
+        if (!isStarted)
+            return;
+
         if (IsReadyToSpawn())
             SpawnDuck();
 	}
+
+    void StartQueue()
+    {
+        nextDuckSpawnTime = Time.realtimeSinceStartup + minDuckSpawnDelay;
+        isStarted = true;
+    }
 
     void SpawnDuck()
     {
