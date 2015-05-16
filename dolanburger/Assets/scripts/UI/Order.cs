@@ -38,6 +38,8 @@ public class Order : MonoBehaviour, IObjectDropHandler
 
     public List<GameObject> Children;
     public List<Image> PlateList;
+    //Meat, Cheese, Vege, Tomato
+    public List<Image> Food;
 
     private int ItemsOnPlateOffset;
     DuckQueue Queue;
@@ -174,6 +176,41 @@ public class Order : MonoBehaviour, IObjectDropHandler
 
     public void AddToPlate(Item item)
     {
+        GameObject food;
+        switch(item.FType)
+        {
+            case FoodType.Cheese:
+                FoodTypeColorCode = 4;
+                break;
+            case FoodType.Meat:
+                FoodTypeColorCode = 0;
+                break;
+            case FoodType.Tomato:
+                FoodTypeColorCode = 12;
+                break;
+            case FoodType.Vege:
+                FoodTypeColorCode = 8;
+                break;
+        }
+        //Meat, Cheese, Vege, Tomato
+
+        switch (item.Level)
+        {
+            case 0:
+                food = GameObject.Instantiate(Food[FoodTypeColorCode].gameObject);
+                break;
+            case 1:
+                food = GameObject.Instantiate(Food[FoodTypeColorCode + 1].gameObject);
+                break;
+            case 2:
+                food = GameObject.Instantiate(Food[FoodTypeColorCode + 2].gameObject);
+                break;
+            case 3:
+                food = GameObject.Instantiate(Food[FoodTypeColorCode + 3].gameObject);
+                break;
+        }
+
+
         BurgerReceived.Items.Add(item);
         ItemsOnPlateOffset += 20;
     }

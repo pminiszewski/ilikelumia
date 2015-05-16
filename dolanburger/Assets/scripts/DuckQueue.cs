@@ -52,6 +52,7 @@ public class DuckQueue : MonoBehaviour {
 		StartCoroutine(MoveTo(duck, ducksSittingPositions[freePlace]));
 
         duck.burger = GrillTest.CreateRandomBurger();
+        //print("index: " + freePlace + ", burger items: " + duck.burger.Items.Count);
         counter.AddOrder(duck);
     }
 	IEnumerator MoveTo(Duck d, Vector3 targetPos)
@@ -70,20 +71,23 @@ public class DuckQueue : MonoBehaviour {
     public void RemoveDuck(int i)
     {
         Destroy(duckList[i]);
+        duckList[i] = null;
         currNrOfDucks--;
     }
 
     public void RemoveDuck(Duck duck)
     {
         Destroy(duckList[duck.PlaceIndex]);
+        duckList[duck.PlaceIndex] = null;
         currNrOfDucks--;
+        //print("removing: " + duck.PlaceIndex);
     }
 
     int GetFreePlace()
     {
         for (int i = 0; i < queueLimit; i++)
         {
-            if (!duckList.ContainsKey(i))
+            if (!duckList.ContainsKey(i) || duckList[i] == null)
                 return i;
         }
         return 0;
