@@ -40,6 +40,8 @@ public class GrillTest : MonoBehaviour
 		FoodType randomBar = (FoodType)values.GetValue(UnityEngine.Random.Range(0, values.Length -1));
 		i.FType = randomBar;
 
+		i.Level = UnityEngine.Random.Range(0, 3);
+
 		go.AddComponent<Image>().sprite = i.GetFoodImage();
 		go.name = "Item_"+randomBar.ToString();
 		return i;
