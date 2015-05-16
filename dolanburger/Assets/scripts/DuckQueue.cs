@@ -25,6 +25,7 @@ public class DuckQueue : MonoBehaviour {
 
 	void Start()
     {
+        isStarted = true;
         counter = FindObjectOfType<Counter>();
         canvas = GameObject.Find("Canvas").transform;
         nextDuckSpawnTime = Time.realtimeSinceStartup + 2.0f;

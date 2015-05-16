@@ -212,7 +212,8 @@ public class Order : MonoBehaviour, IObjectDropHandler
 
     public void AddToPlate(Item item)
     {
-
+        if (BurgerOrdered == null)
+            return;
         if (BurgerComplete)
             return;
         
