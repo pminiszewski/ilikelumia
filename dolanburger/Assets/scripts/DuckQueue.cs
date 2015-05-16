@@ -11,6 +11,7 @@ public class DuckQueue : MonoBehaviour {
     float maxDuckSpawnBias = 1f;
     float nextDuckSpawnTime = 0;
 
+    [SerializeField] GameObject scoreCard;
     [SerializeField] GameObject duckPrefab;
     [SerializeField] Vector3[] ducksSittingPositions;
     Transform canvas;
@@ -81,6 +82,12 @@ public class DuckQueue : MonoBehaviour {
         duckList[duck.PlaceIndex] = null;
         currNrOfDucks--;
         //print("removing: " + duck.PlaceIndex);
+    }
+
+    public void ShowCard(Duck duck, bool isGood)
+    {
+        Vector3 cardPos = ducksSittingPositions[duck.PlaceIndex] + new Vector3(0, 50, 0);
+
     }
 
     int GetFreePlace()
