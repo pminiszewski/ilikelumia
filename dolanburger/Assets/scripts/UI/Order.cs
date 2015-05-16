@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
@@ -45,8 +45,8 @@ public class Order : MonoBehaviour, IObjectDropHandler
 
     private int ItemsOnPlateOffset;
     private int OrderedItemsCount;
-
-	private List<Item> _HackedItemList = new List<Item>();
+    private bool hasDiamonds;
+    private List<Item> _HackedItemList = new List<Item>();
     DuckQueue Queue;
     Duck _Duck;
 

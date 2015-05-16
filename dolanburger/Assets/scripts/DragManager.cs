@@ -51,7 +51,7 @@ public class DragManager : MonoBehaviour {
 		dragStartedFrom = currentlyOver.gameObject.transform.position;
 		draggedObj.gameObject.transform.SetParent (ContainerForDragging.transform);
 
-		draggedObj.AddComponent<Autodestruct> ();
+		//draggedObj.AddComponent<Autodestruct> ();
 
 		var item = draggedObj.gameObject.GetComponent<Item> ();
 		if (item != null) {

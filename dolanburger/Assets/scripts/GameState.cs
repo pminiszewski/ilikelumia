@@ -14,8 +14,9 @@ public class GameState : MonoBehaviour {
     private float _StartTime;
     private float _LerpTime;
     private bool _IntroStart;
+    private bool StartGame;
     private Vector3 _StartPos;
-
+    public DuckQueue Queue;
     void Start ()
     {
 		_StartTime = Time.realtimeSinceStartup;
@@ -24,23 +25,25 @@ public class GameState : MonoBehaviour {
 	void Update ()
     {
 
-        if(_IntroStart)
+        if (_IntroStart)
         {
-            IntroScreen.transform.localPosition = Vector3.Lerp(_StartPos, new Vector3(0,1920,0), _LerpTime);
+            IntroScreen.transform.localPosition = Vector3.Lerp(_StartPos, new Vector3(0, 1920, 0), _LerpTime);
             if (_LerpTime < 1)
             {
                 _LerpTime += Time.deltaTime / 2.0f;
             }
         }
-
-        if (TimeText != null)
-		{
-			TimeText.text = "Time: "+(Time.realtimeSinceStartup - _StartTime).ToString();
-		}
-		if(FailuresText)
-		{
-			FailuresText.text = "Failed deliveries: "+ nrOfFailures;
-		}
+        if(StartGame)
+        {
+            if (TimeText != null)
+            {
+                TimeText.text = "Time: " + (Time.realtimeSinceStartup - _StartTime).ToString();
+            }
+            if (FailuresText)
+            {
+                FailuresText.text = "Failed deliveries: " + nrOfFailures;
+            }
+        }
         
 	}
 
@@ -61,6 +64,7 @@ public class GameState : MonoBehaviour {
     {
         yield return new WaitForSeconds(2.0f);
         _IntroStart = false;
-
+        Queue.StartQueue();
+        StartGame = true;
     }
 }

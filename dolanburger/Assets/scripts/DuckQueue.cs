@@ -26,20 +26,9 @@ public class DuckQueue : MonoBehaviour {
 
 	void Start()
     {
-        isStarted = true;
         counter = FindObjectOfType<Counter>();
         canvas = GameObject.Find("Canvas").transform;
-        nextDuckSpawnTime = Time.realtimeSinceStartup + 2.0f;
-
-        for (int i = 0; i < 3; i++)
-        {
-            Vector3 cardPos = scoreCardsPositions[i];
-            GameObject currDuckScoreCard = GameObject.Instantiate(scoreCard);
-            currDuckScoreCard.transform.SetParent(canvas.transform);
-            currDuckScoreCard.transform.position = cardPos;
-            // set sprite
-            currDuckScoreCard.GetComponent<Image>().sprite = Resources.Load<Sprite>("UI_fail");
-        }
+        nextDuckSpawnTime = 0.0f;
 }
 
 void Update()
@@ -51,9 +40,9 @@ void Update()
             SpawnDuck();
 	}
 
-    void StartQueue()
+   public void StartQueue()
     {
-        nextDuckSpawnTime = Time.realtimeSinceStartup + minDuckSpawnDelay;
+        nextDuckSpawnTime = 0;
         isStarted = true;
     }
 
