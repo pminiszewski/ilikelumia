@@ -67,6 +67,6 @@ public class Item : MonoBehaviour
 
 	public void DragEnd()
 	{
-		dManager.DragEnd ();
+		dManager.DragEndFromGrill ();
 	}
 }

@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -22,6 +22,7 @@ public class DuckQueue : MonoBehaviour {
 
 	void Start()
     {
+        counter = FindObjectOfType<Counter>();
         canvas = GameObject.Find("Canvas").transform;
         nextDuckSpawnTime = Time.realtimeSinceStartup + minDuckSpawnDelay;
 	}
@@ -42,7 +43,7 @@ public class DuckQueue : MonoBehaviour {
         GameObject duckObject = duckList[freePlace] = GameObject.Instantiate(duckPrefab);
         // duck usage
         Duck duck = duckObject.GetComponent<Duck>();
-
+        duck.PlaceIndex = freePlace;
         duckObject.transform.SetParent(transform);
         //duckObject.transform.position = ducksSittingPositions[freePlace];
 		Vector3 pos = ducksSittingPositions[freePlace];
@@ -50,8 +51,8 @@ public class DuckQueue : MonoBehaviour {
 		duckObject.transform.position = pos;
 		StartCoroutine(MoveTo(duck, ducksSittingPositions[freePlace]));
 
-        //duck.burger = GrillTest.CreateRandomBurger();
-        //counter.AddOrder(duck.burger);
+        duck.burger = GrillTest.CreateRandomBurger();
+        counter.AddOrder(duck);
     }
 	IEnumerator MoveTo(Duck d, Vector3 targetPos)
 	{
@@ -65,9 +66,16 @@ public class DuckQueue : MonoBehaviour {
 		d.burger = GrillTest.CreateRandomBurger();
 		counter.AddOrder(d.burger);
     }
-    void RemoveDuck(int i)
+
+    public void RemoveDuck(int i)
     {
         Destroy(duckList[i]);
+        currNrOfDucks--;
+    }
+
+    public void RemoveDuck(Duck duck)
+    {
+        Destroy(duckList[duck.PlaceIndex]);
         currNrOfDucks--;
     }
 

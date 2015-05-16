@@ -13,13 +13,13 @@ public class Counter : MonoBehaviour
     {
     }
 
-    public void AddOrder(Burger newOrder)
+    public void AddOrder(Duck duck)
     {
         for(int i = 0; i < 3; i++)
         {
             if (OrderList[i].Free)
             {
-                OrderList[i].CreateOrder(newOrder);
+                OrderList[i].CreateOrder(duck, i);
                 break;
             }
         }
