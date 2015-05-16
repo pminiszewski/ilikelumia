@@ -150,27 +150,26 @@ public class Order : MonoBehaviour, IObjectDropHandler
 			return false;
 		}
         for (int i = 0; i < r.Count; i++)
+        {
+            bool t = o[i].FType == r[i].FType;
+            t &= o[i].Level == r[i].Level;
+            t &= o[i].HasDiamond == r[i].HasDiamond;
+            if (!t)
             {
-                bool t = o[i].FType == r[i].FType;
-                t &= o[i].Level == r[i].Level;
-                t &= o[i].HasDiamond == r[i].HasDiamond;
-                if (!t)
-                {
-                    return false;
-                }
+                return false;
             }
+        }
         return true;
-
-
-
     }
     public void OrderComplete()
     {
         bool isGood = ValidateOrder();
         if (!isGood)
+        {
             GameState.nrOfFailures++;
+            Queue.ShowCard(_Duck);
+        }
 
-        Queue.ShowCard(_Duck, isGood);
 
         for (int i = 0; i < Children.Count; i++)
         {
