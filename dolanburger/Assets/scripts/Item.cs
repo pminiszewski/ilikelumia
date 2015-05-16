@@ -72,16 +72,16 @@ public class Item : MonoBehaviour, IObjectDropHandler
 		switch (FType)
 		{
 		case FoodType.Cheese:
-			t = 1;
+			t = 6;
 			break;
 		case FoodType.Meat:
-			t = 3;
+			t = 8;
 			break;
 		case FoodType.Tomato:
-			t = 1.5f;
+			t = 4f;
 			break;
 		case FoodType.Vege:
-			t = 2;
+			t = 5;
 			break;
 		default:
 			break;
