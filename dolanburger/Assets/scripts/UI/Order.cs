@@ -239,6 +239,7 @@ public class Order : MonoBehaviour, IObjectDropHandler
 		{
 			AddToPlate(it);
 		}
+		Debug.Log("Drop shit on plate");
 	}
 
 	#endregion
