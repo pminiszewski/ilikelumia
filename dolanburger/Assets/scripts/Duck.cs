@@ -11,16 +11,7 @@ public class Duck : MonoBehaviour {
         Mafia,
         Police
     }
-
-    public enum Parts
-    {
-        Top,
-        Middle,
-        Bottom
-    }
-
-    public Dictionary<Parts, Image> parts;
-
+    
     [System.Serializable]
     public struct Appearance
     {
@@ -35,10 +26,12 @@ public class Duck : MonoBehaviour {
     public Appearance maxMafiaAppearance;
     public Appearance maxPoliceAppearance;
     public int PlaceIndex;
+
     void Start ()
     {
         duckType = GenerateDuckType();
         SetAppearance();
+
     }
 
     void Update ()
@@ -87,5 +80,4 @@ public class Duck : MonoBehaviour {
         imgs[1].sprite = Resources.Load<Sprite>(middleStr);
         imgs[2].sprite = Resources.Load<Sprite>(bottomStr);
     }
-
 }

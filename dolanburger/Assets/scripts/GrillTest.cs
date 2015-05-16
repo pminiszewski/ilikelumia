@@ -20,11 +20,14 @@ public class GrillTest : MonoBehaviour
 	{
 		GameObject go = new GameObject();
 		Burger b =  go.AddComponent<Burger>();
+        // add items
 		for(int i=0; i<UnityEngine.Random.Range(3,6); i++)
 		{
 			Item it = CreateRandomItem();
 			b.AddItem(it);
 		}
+        // set variables
+        b.wantedLevel = UnityEngine.Random.Range(0, 3);
 		return b;
 	}
 	public static Item CreateRandomItem()
