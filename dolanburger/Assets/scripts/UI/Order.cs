@@ -45,6 +45,8 @@ public class Order : MonoBehaviour, IObjectDropHandler
 
     private int ItemsOnPlateOffset;
     private int OrderedItemsCount;
+
+	private List<Item> _HackedItemList = new List<Item>();
     DuckQueue Queue;
     Duck _Duck;
 
@@ -144,16 +146,22 @@ public class Order : MonoBehaviour, IObjectDropHandler
 	public bool ValidateOrder()
 	{
 		List<Item> o = BurgerOrdered.Items;
-		List<Item> r = BurgerRecivedObj.Items;
+		List<Item> r = _HackedItemList;
+		Debug.Log("o.count: "+o.Count + " r.count: " + r.Count);
 		if(o.Count != r.Count)
 		{
+
 			return false;
 		}
+	
         for (int i = 0; i < r.Count; i++)
         {
             bool t = o[i].FType == r[i].FType;
-            t &= o[i].Level == r[i].Level;
+			Debug.Log(string.Format("o.ftype={0}, r.ftype={1}",o[i].FType, r[i].FType ));
+            t &= Mathf.Abs( o[i].Level - r[i].Level) <= 1;
+			Debug.Log(string.Format("o.Level={0}, r.Level={1}",o[i].Level, r[i].Level ));
             t &= o[i].HasDiamond == r[i].HasDiamond;
+			Debug.Log(string.Format("o.HasDiamond={0}, r.HasDiamond={1}",o[i].HasDiamond, r[i].HasDiamond ));
             if (!t)
             {
                 return false;
@@ -164,6 +172,7 @@ public class Order : MonoBehaviour, IObjectDropHandler
     public void OrderComplete()
     {
         bool isGood = ValidateOrder();
+		_HackedItemList.Clear();
         if (!isGood)
         {
             GameState.nrOfFailures++;
@@ -194,6 +203,7 @@ public class Order : MonoBehaviour, IObjectDropHandler
 
     public void AddToPlate(Item item)
     {
+		_HackedItemList.Add(item);
 
         if (BurgerComplete)
             return;

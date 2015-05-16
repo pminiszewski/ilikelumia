@@ -22,13 +22,13 @@ public class GrillTest : MonoBehaviour
 		GameObject go = new GameObject();
 		Burger b =  go.AddComponent<Burger>();
         // add items
-		for(int i=0; i<UnityEngine.Random.Range(3,6); i++)
+		for(int i=0; i<UnityEngine.Random.Range(1,4); i++)
 		{
 			Item it = CreateRandomItem();
 			b.AddItem(it);
 		}
         // set variables
-        b.wantedLevel = UnityEngine.Random.Range(0, 3);
+        //b.wantedLevel = UnityEngine.Random.Range(0, 3);
 		return b;
 	}
 	public static Item CreateRandomItem()
@@ -37,7 +37,7 @@ public class GrillTest : MonoBehaviour
 		Item i =  go.AddComponent<Item>();
 		Array values = Enum.GetValues(typeof(FoodType));
 		
-		FoodType randomBar = (FoodType)values.GetValue(UnityEngine.Random.Range(0, values.Length -1));
+		FoodType randomBar = (FoodType)values.GetValue(UnityEngine.Random.Range(0, values.Length ));
 		i.FType = randomBar;
 
 		i.Level = UnityEngine.Random.Range(0, 3);
