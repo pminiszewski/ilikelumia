@@ -19,6 +19,7 @@ public class DragManager : MonoBehaviour {
 	Vector3 dragStartedFrom = new Vector2();
 	bool dragStarted = false;
 	public GameObject draggedObj;
+	Transform startedParent;
 
 	// Use this for initialization
 	void Start () {
@@ -51,7 +52,9 @@ public class DragManager : MonoBehaviour {
 		draggedObj.gameObject.transform.SetParent (ContainerForDragging.transform);
 
 		var item = draggedObj.gameObject.GetComponent<Item> ();
-		item.dManager = this;
+		if (item != null) {
+			item.dManager = this;
+		}
 
 		dragStarted = true;
 	}
@@ -59,6 +62,7 @@ public class DragManager : MonoBehaviour {
 	public void DragBegin() 
 	{
 		draggedObj = currentlyOver;
+		startedParent = currentlyOver.transform.parent;
 		dragStartedFrom = currentlyOver.gameObject.transform.position;
 		draggedObj.gameObject.transform.SetParent (ContainerForDragging.transform);
 		
@@ -74,6 +78,7 @@ public class DragManager : MonoBehaviour {
 
 		var detected = currentlyOver.gameObject.GetComponent<IObjectDropHandler> ();
 		if (detected == null) {
+			Debug.LogError("NIE MA!");
 			draggedObj.transform.position = dragStartedFrom;
 			DestroyObject(draggedObj);
 			draggedObj = null;
@@ -100,7 +105,7 @@ public class DragManager : MonoBehaviour {
 
 		detected.HandleDrop(draggedObj);
 
-		draggedObj.gameObject.transform.SetParent (currentlyOver.transform);
+		draggedObj.gameObject.transform.SetParent (startedParent);
 		draggedObj = null;
 		
 	}
