@@ -45,7 +45,7 @@ public class Duck : MonoBehaviour {
 
         string duck = "Duck/" + Random.Range(0, maxDuckAppearance-1);
         string normal = "Normal/" + Random.Range(0, maxNormalAppearance-1);
-        string special = "";
+        string special = "Normal/4";        // 4 is empty
 
         switch (duckType)
         {
