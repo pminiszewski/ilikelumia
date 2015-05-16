@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-public class Grill : MonoBehaviour 
+public class Grill : MonoBehaviour, IObjectDropHandler
 {
 	public List<Item> Items
 	{
@@ -25,21 +25,24 @@ public class Grill : MonoBehaviour
 
 	public void AddToGrill(Item item)
 	{
-		if(!Items.Contains(item))
-		{
-			Items.Add(item);
+		Debug.Log("Cook!");
 			item.Grill(this);
-		}
+
 	}
 
 	public void RemoveFromGrill(Item item)
 	{
-		Items.Remove(item);
 		item.Stop();
 	}
 
 	public void OnItemBurned(Item item)
 	{
 
+	}
+
+	public void HandleDrop(GameObject obj)
+	{
+		//Debug.Log("Handle drop" + obj.GetComponent<Item>().FType);
+		AddToGrill(obj.GetComponent<Item>()); 
 	}
 }

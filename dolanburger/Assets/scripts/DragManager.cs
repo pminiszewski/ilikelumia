@@ -3,6 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.EventSystems;
 
+public interface IObjectDropHandler
+{
+	void HandleDrop(GameObject obj);
+}
+
 public class DragManager : MonoBehaviour {
 
 	public EventSystem eventSystem;
@@ -40,7 +45,7 @@ public class DragManager : MonoBehaviour {
 
 	public void DragBegin() 
 	{
-		Debug.Log ("Start");
+
 		
 		//draggedObj = currentlyOver;
 		draggedObj = currentlyOver.gameObject.GetComponent<Bucket> ().OnSpawnItem ();
@@ -61,9 +66,9 @@ public class DragManager : MonoBehaviour {
 			return;
 		}
 
-		currentlyOver.gameObject.GetComponent<CatchingDrop> ().CatchDrop (draggedObj);
+		currentlyOver.gameObject.GetComponent<IObjectDropHandler> ().HandleDrop(draggedObj);
 
-		draggedObj.gameObject.transform.SetParent (FailStateObject.transform);
+		draggedObj.gameObject.transform.SetParent (currentlyOver.transform);
 		draggedObj = null;
 
 	}

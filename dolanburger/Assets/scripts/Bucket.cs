@@ -13,7 +13,7 @@ public class DiamondBucket : MonoBehaviour
 		GameObject go = Instantiate<GameObject>(ItemPrefab.gameObject);
 		Item i = go.GetComponent<Item>();
 		go.name = "Item_"+i.FType.ToString();
-		i.transform.parent = transform;
+		i.transform.SetParent( transform);
 		return go;
 	}
 
