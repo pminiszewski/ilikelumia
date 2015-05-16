@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
-public class Order : MonoBehaviour
+public class Order : MonoBehaviour, IObjectDropHandler
 {
 
     /*
@@ -192,4 +192,17 @@ public class Order : MonoBehaviour
     {
 
     }
+
+	#region IObjectDropHandler implementation
+
+	public void HandleDrop (GameObject obj)
+	{
+		Item it = obj.GetComponent<Item>();
+		if(it != null)
+		{
+			AddToPlate(it);
+		}
+	}
+
+	#endregion
 }

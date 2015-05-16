@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Item : MonoBehaviour
+public class Item : MonoBehaviour, IObjectDropHandler
 {
 	
 	public bool HasDiamond;
@@ -68,5 +68,16 @@ public class Item : MonoBehaviour
 	public void DragEnd()
 	{
 		dManager.DragEndFromGrill ();
+	}
+
+	public void HandleDrop(GameObject obj)
+	{
+		Diamond d = obj.GetComponent<Diamond>();
+		if(d != null)
+		{
+			HasDiamond = true;
+			Destroy(obj);
+			Debug.Log("Added diamond");
+		}
 	}
 }

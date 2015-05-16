@@ -44,7 +44,7 @@ public class DragManager : MonoBehaviour {
 
 	public void DragBeginBucket() 
 	{
-		draggedObj = currentlyOver.gameObject.GetComponent<Bucket> ().OnSpawnItem ();
+		draggedObj = currentlyOver.gameObject.GetComponent<IBucket> ().OnSpawnItem ();
 
 
 		dragStartedFrom = currentlyOver.gameObject.transform.position;

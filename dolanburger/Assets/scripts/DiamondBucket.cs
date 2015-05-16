@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine.UI;
 
-public class DiamondBucket : MonoBehaviour 
+public class DiamondBucket : MonoBehaviour, IBucket
 {
 	public Diamond ItemPrefab;
 
@@ -10,8 +10,7 @@ public class DiamondBucket : MonoBehaviour
 	public GameObject OnSpawnItem()
 	{
 		GameObject go = Instantiate<GameObject>(ItemPrefab.gameObject);
-		Item i = go.GetComponent<Item>();
-		go.name = "Item_"+i.FType.ToString();
+		Diamond i = go.GetComponent<Diamond>();
 		i.transform.parent = transform;
 		return go;
 	}
