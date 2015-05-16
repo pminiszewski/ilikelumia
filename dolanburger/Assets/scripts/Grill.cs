@@ -43,6 +43,14 @@ public class Grill : MonoBehaviour, IObjectDropHandler
 	public void HandleDrop(GameObject obj)
 	{
 		//Debug.Log("Handle drop" + obj.GetComponent<Item>().FType);
-		AddToGrill(obj.GetComponent<Item>()); 
+		Item i = obj.GetComponent<Item>();
+		if(i != null)
+		{
+			AddToGrill(i); 
+		}
+		else
+		{
+			Destroy(i.gameObject);
+		}
 	}
 }
