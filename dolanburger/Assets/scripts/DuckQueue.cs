@@ -85,18 +85,14 @@ public class DuckQueue : MonoBehaviour {
         //print("removing: " + duck.PlaceIndex);
     }
 
-    public void ShowCard(Duck duck, bool isGood)
+    public void ShowCard(Duck duck)
     {
-        string card;
-        if(isGood) card = "burgerGood";
-        else       card = "burgerBad";
-
         Vector3 cardPos = ducksSittingPositions[duck.PlaceIndex] + new Vector3(200, 300, 0);
         GameObject currDuckScoreCard = GameObject.Instantiate(scoreCard);
         currDuckScoreCard.transform.SetParent(canvas.transform);
         currDuckScoreCard.transform.position = cardPos;
         // set sprite
-        currDuckScoreCard.GetComponent<Image>().sprite = Resources.Load<Sprite>(card);
+        currDuckScoreCard.GetComponent<Image>().sprite = Resources.Load<Sprite>("UI_fail");
         // show only for few secs
         StartCoroutine(ShowingCard(currDuckScoreCard));
         print("show card");
