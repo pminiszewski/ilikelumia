@@ -40,6 +40,8 @@ public class Order : MonoBehaviour
     public List<GameObject> Children;
     public List<Image> PlateList;
 
+    private int ItemsOnPlateOffset;
+
     // Use this for initialization
     void Start()
     {
@@ -154,7 +156,8 @@ public class Order : MonoBehaviour
 
     public void AddToPlate(Item item)
     {
-        
+
+        ItemsOnPlateOffset += 20;
     }
 
     public void AddLoafToPlate(Image loaf, int empty)
@@ -162,6 +165,7 @@ public class Order : MonoBehaviour
         Image img = GameObject.Instantiate(loaf.gameObject).GetComponent<Image>();
         img.rectTransform.SetParent(Plate.transform);
         img.rectTransform.anchoredPosition = Vector2.zero;
+        ItemsOnPlateOffset = 20;
     }
 
     // Update is called once per frame
