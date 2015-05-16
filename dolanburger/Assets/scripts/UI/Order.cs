@@ -1,9 +1,29 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
 using System.Collections.Generic;
 
 public class Order : MonoBehaviour
 {
+
+    /*
+    cheese:	f6f229 	f0cf2e 	f2a92c
+    green:	069743 	108341 	166424
+    meat:	cc64a7 	89193a  3b1a0c
+    tomato:	e00f16 	cf2921  a4321c
+    */
+
+    string[] ColorCode =
+    {
+        "f6f229",  "f0cf2e",  "f2a92c",
+        "069743",  "108341",  "166424",
+        "cc64a7",  "89193a",  "3b1a0c",
+        "e00f16",  "cf2921",  "a4321c"
+    };
+    //0 - 2 cheese, 3-5 green etc
+    int FoodTypeColorCode = 0;
+    List<Color> Colors = new List<Color>();
+
     public bool Free = true;
     public GameObject Plate;
     public GameObject OrderSign;
@@ -24,7 +44,20 @@ public class Order : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        for(int i = 0; i < ColorCode.Length; i++)
+        {
+            Colors.Add(hexToColor(ColorCode[i]));
+        }
+    }
 
+    public static Color hexToColor(string hex)
+    {
+        byte a = 255;
+        byte r = byte.Parse(hex.Substring(0, 2), System.Globalization.NumberStyles.HexNumber);
+        byte g = byte.Parse(hex.Substring(2, 2), System.Globalization.NumberStyles.HexNumber);
+        byte b = byte.Parse(hex.Substring(4, 2), System.Globalization.NumberStyles.HexNumber);
+
+        return new Color32(r, g, b, a);
     }
 
     public void CreateOrder(Burger burger)
@@ -55,44 +88,38 @@ public class Order : MonoBehaviour
             {
                 case FoodType.Cheese:
                     food = GameObject.Instantiate(Cheese.gameObject).GetComponent<Image>();
+                    FoodTypeColorCode = 0;
                     break;
                 case FoodType.Meat:
                     food = GameObject.Instantiate(Meat.gameObject).GetComponent<Image>();
+                    FoodTypeColorCode = 6;
                     break;
                 case FoodType.Tomato:
                     food = GameObject.Instantiate(Tomato.gameObject).GetComponent<Image>();
+                    FoodTypeColorCode = 9;
                     break;
                 case FoodType.Vege:
                     food = GameObject.Instantiate(Vege.gameObject).GetComponent<Image>();
+                    FoodTypeColorCode = 3;
                     break;
                 default:
                     food = GameObject.Instantiate(Vege.gameObject).GetComponent<Image>();
                     break;
             }
 
-            Color c = food.color;
-
             switch (burger.Items[i].Level)
             {
                 case 0:
-                    c.b *= 0.5f;
-                    c.r *= 0.5f;
-                    c.g *= 0.5f;
+                    food.color = Colors[FoodTypeColorCode];
                     break;
                 case 1:
-                    c.b *= 1f;
-                    c.r *= 1f;
-                    c.g *= 1f;
+                    food.color = Colors[FoodTypeColorCode  + 1];
                     break;
                 case 2:
-                    c.b *= 1.4f;
-                    c.r *= 1.4f;
-                    c.g *= 1.4f;
+                    food.color = Colors[FoodTypeColorCode + 2];
                     break;
                 case 3:
-                    c.b = 1.0f;
-                    c.r = 1.0f;
-                    c.g = 1.0f;
+                    food.color = Color.black;
                     break;
             }
             food.rectTransform.SetParent(OrderSign.transform);
@@ -102,6 +129,11 @@ public class Order : MonoBehaviour
         OrderSign.gameObject.SetActive(true);
 
         Free = false;
+    }
+
+    public void SetColor(Item item, Image img)
+    {
+
     }
 
 	public bool ValidateOrder()
@@ -136,7 +168,7 @@ public class Order : MonoBehaviour
     {
        Image img = GameObject.Instantiate(loaf.gameObject).GetComponent<Image>();
        img.rectTransform.SetParent(Plate.transform);
-
+        img.rectTransform.position = Vector3.zero;
         for(int i = 0; i < empty + 1; i++)
         {
             img = GameObject.Instantiate(loaf.gameObject).GetComponent<Image>();
