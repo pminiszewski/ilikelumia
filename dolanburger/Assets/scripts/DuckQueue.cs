@@ -64,7 +64,7 @@ public class DuckQueue : MonoBehaviour {
 			yield return new WaitForSeconds(0.01f);
         }
 		d.burger = GrillTest.CreateRandomBurger();
-		counter.AddOrder(d.burger);
+		counter.AddOrder(d);
     }
 
     public void RemoveDuck(int i)
