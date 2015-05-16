@@ -8,8 +8,8 @@ public class DuckQueue : MonoBehaviour {
     int queueLimit = 3;
     int currNrOfDucks = 0;
 
-    float minDuckSpawnDelay = 1f;
-    float maxDuckSpawnBias = 1f;
+    float minDuckSpawnDelay = 10f;
+    float maxDuckSpawnBias = 10;
     float nextDuckSpawnTime = 0;
 
     [SerializeField] GameObject scoreCard;
@@ -26,7 +26,7 @@ public class DuckQueue : MonoBehaviour {
     {
         counter = FindObjectOfType<Counter>();
         canvas = GameObject.Find("Canvas").transform;
-        nextDuckSpawnTime = Time.realtimeSinceStartup + minDuckSpawnDelay;
+        nextDuckSpawnTime = Time.realtimeSinceStartup + 2.0f;
 	}
 	
 	void Update()
