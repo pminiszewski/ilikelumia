@@ -45,10 +45,7 @@ public class Order : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        for(int i = 0; i < ColorCode.Length; i++)
-        {
-            Colors.Add(hexToColor(ColorCode[i]));
-        }
+        
     }
 
     public static Color hexToColor(string hex)
@@ -63,8 +60,14 @@ public class Order : MonoBehaviour
 
     public void CreateOrder(Burger burger)
     {
+
+        for (int i = 0; i < ColorCode.Length; i++)
+        {
+            Colors.Add(hexToColor(ColorCode[i]));
+        }
+
         BurgerOrdered = burger;
-        AddLoafToPlate(BurgerBottom, burger.Items.Count);
+        AddLoafToPlate(BurgerBottom);
         BurgerReceived.gameObject.SetActive(true);
 
         for (int i = -1; i < burger.Items.Count + 1; i++)
@@ -160,7 +163,7 @@ public class Order : MonoBehaviour
         ItemsOnPlateOffset += 20;
     }
 
-    public void AddLoafToPlate(Image loaf, int empty)
+    public void AddLoafToPlate(Image loaf)
     {
         Image img = GameObject.Instantiate(loaf.gameObject).GetComponent<Image>();
         img.rectTransform.SetParent(Plate.transform);
