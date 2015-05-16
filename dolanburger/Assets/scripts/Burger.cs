@@ -16,6 +16,8 @@ public enum FoodType
 
 public class Burger : MonoBehaviour 
 {
+    public int wantedLevel;
+
 	public List<Item> Items 
 	{
 		get
