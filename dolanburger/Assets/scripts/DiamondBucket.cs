@@ -2,9 +2,9 @@
 using System.Collections;
 using UnityEngine.UI;
 
-public class DiamondBucket : MonoBehaviour 
+public class Bucket : MonoBehaviour 
 {
-	public Item ItemPrefab;
+	public Diamond ItemPrefab;
 	public FoodType BucketType;
 
 
