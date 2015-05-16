@@ -44,6 +44,7 @@ public class Order : MonoBehaviour, IObjectDropHandler
     public List<Image> Food;
 
     private int ItemsOnPlateOffset;
+    private int OrderedItemsCount;
     DuckQueue Queue;
     Duck _Duck;
 
@@ -65,17 +66,21 @@ public class Order : MonoBehaviour, IObjectDropHandler
 
     public void CreateOrder(Duck duck, int index)
     {
+
         _Duck = duck;
         for (int i = 0; i < ColorCode.Length; i++)
         {
             Colors.Add(hexToColor(ColorCode[i]));
         }
-        BurgerRecivedObj = GameObject.Instantiate(BurgerReceived) as Burger;
-        BurgerRecivedObj.transform.parent = Plate.transform;
+        
         BurgerOrdered = duck.burger;
-        AddLoafToPlate(BurgerBottom);
+        AddLoafToPlate(BurgerBottom, Vector2.zero);
+        BurgerRecivedObj = GameObject.Instantiate(BurgerReceived) as Burger;
+        BurgerRecivedObj.name = "RecivedBurger";
+        BurgerRecivedObj.transform.parent = Plate.transform;
+        BurgerRecivedObj.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
         BurgerRecivedObj.gameObject.SetActive(true);
-
+        OrderedItemsCount = duck.burger.Items.Count;
         for (int i = -1; i < duck.burger.Items.Count + 1; i++)
         {
             Image food;
@@ -182,23 +187,18 @@ public class Order : MonoBehaviour, IObjectDropHandler
         OrderSign.gameObject.SetActive(false);
         BurgerRecivedObj.gameObject.SetActive(false);
         Free = true;
+        BurgerComplete = false;
         Queue.RemoveDuck(_Duck);
     }
 
-    private bool BurgerComplete;
+    private bool BurgerComplete = false;
 
     public void AddToPlate(Item item)
     {
-        Debug.Log(BurgerRecivedObj.Items.Count);
-        if (BurgerRecivedObj.Items.Count == BurgerOrdered.Items.Count)
-        {
-            if (!BurgerComplete)
-            {
-                BurgerComplete = true;
-                AddLoafToPlate(BurgerTop);
-            }
+
+        if (BurgerComplete)
             return;
-        }
+        
 
         Image food;
         switch(item.FType)
@@ -236,18 +236,25 @@ public class Order : MonoBehaviour, IObjectDropHandler
                 food = GameObject.Instantiate(Food[FoodTypeColorCode + 3].gameObject).GetComponent<Image>();
                 break;
         }
+        food.rectTransform.SetParent(BurgerRecivedObj.transform);
 
         food.rectTransform.anchoredPosition = new Vector2(0, ItemsOnPlateOffset);
-        food.transform.parent = BurgerRecivedObj.transform;
         PlateList.Add(food);
         ItemsOnPlateOffset += 25;
+        int childrenCount = BurgerRecivedObj.GetComponentsInChildren<Image>().Length;
+
+        if (childrenCount == OrderedItemsCount)
+        {
+           BurgerComplete = true;
+           AddLoafToPlate(BurgerTop, new Vector2(0, ItemsOnPlateOffset + 20));
+        }
     }
 
-    public void AddLoafToPlate(Image loaf)
+    public void AddLoafToPlate(Image loaf, Vector2 offset)
     {
         Image img = GameObject.Instantiate(loaf.gameObject).GetComponent<Image>();
         img.rectTransform.SetParent(Plate.transform);
-        img.rectTransform.anchoredPosition = Vector2.zero;
+        img.rectTransform.anchoredPosition = offset;
         ItemsOnPlateOffset = 10;
         PlateList.Add(img);
     }
