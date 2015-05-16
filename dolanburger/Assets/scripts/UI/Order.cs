@@ -183,11 +183,18 @@ public class Order : MonoBehaviour, IObjectDropHandler
         Queue.RemoveDuck(_Duck);
     }
 
+    private bool BurgerComplete;
+
     public void AddToPlate(Item item)
     {
+        Debug.Log(BurgerReceived.Items.Count);
         if (BurgerReceived.Items.Count == BurgerOrdered.Items.Count)
         {
-            AddLoafToPlate(BurgerTop);
+            if (!BurgerComplete)
+            {
+                BurgerComplete = true;
+                AddLoafToPlate(BurgerTop);
+            }
             return;
         }
 
@@ -228,9 +235,8 @@ public class Order : MonoBehaviour, IObjectDropHandler
                 break;
         }
 
-        food.rectTransform.SetParent(Plate.transform);
         food.rectTransform.anchoredPosition = new Vector2(0, ItemsOnPlateOffset);
-        BurgerReceived.Items.Add(item);
+        item.transform.SetParent(BurgerReceived.transform);
         PlateList.Add(food);
         ItemsOnPlateOffset += 25;
     }
