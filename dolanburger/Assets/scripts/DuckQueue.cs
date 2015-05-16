@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -11,6 +12,7 @@ public class DuckQueue : MonoBehaviour {
     float maxDuckSpawnBias = 1f;
     float nextDuckSpawnTime = 0;
 
+    [SerializeField] GameObject scoreCard;
     [SerializeField] GameObject duckPrefab;
     [SerializeField] Vector3[] ducksSittingPositions;
     Transform canvas;
@@ -47,7 +49,7 @@ public class DuckQueue : MonoBehaviour {
         duckObject.transform.SetParent(transform);
         //duckObject.transform.position = ducksSittingPositions[freePlace];
 		Vector3 pos = ducksSittingPositions[freePlace];
-		pos.x = -20;
+		//pos.x = -20;
 		duckObject.transform.position = pos;
 		StartCoroutine(MoveTo(duck, ducksSittingPositions[freePlace]));
 
@@ -81,6 +83,30 @@ public class DuckQueue : MonoBehaviour {
         duckList[duck.PlaceIndex] = null;
         currNrOfDucks--;
         //print("removing: " + duck.PlaceIndex);
+    }
+
+    public void ShowCard(Duck duck, bool isGood)
+    {
+        string card;
+        if(isGood) card = "burgerGood";
+        else       card = "burgerBad";
+
+        Vector3 cardPos = ducksSittingPositions[duck.PlaceIndex] + new Vector3(200, 300, 0);
+        GameObject currDuckScoreCard = GameObject.Instantiate(scoreCard);
+        currDuckScoreCard.transform.SetParent(canvas.transform);
+        currDuckScoreCard.transform.position = cardPos;
+        // set sprite
+        currDuckScoreCard.GetComponent<Image>().sprite = Resources.Load<Sprite>(card);
+        // show only for few secs
+        StartCoroutine(ShowingCard(currDuckScoreCard));
+        print("show card");
+    }
+
+    IEnumerator ShowingCard(GameObject obj)
+    {
+        yield return new WaitForSeconds(3);
+        print("destroy card");
+        Destroy(obj);
     }
 
     int GetFreePlace()

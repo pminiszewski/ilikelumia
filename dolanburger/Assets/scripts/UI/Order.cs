@@ -35,6 +35,7 @@ public class Order : MonoBehaviour, IObjectDropHandler
     public Image Foodtype;
 
     public Image BurgerBottom;
+    public Image BurgerTop;
 
     public List<GameObject> Children;
     public List<Image> PlateList;
@@ -158,7 +159,11 @@ public class Order : MonoBehaviour, IObjectDropHandler
     }
     public void OrderComplete()
     {
-        ValidateOrder();
+        bool isGood = ValidateOrder();
+        if (!isGood)
+            GameState.nrOfFailures++;
+
+        Queue.ShowCard(_Duck, isGood);
 
         for (int i = 0; i < Children.Count; i++)
         {
@@ -166,8 +171,12 @@ public class Order : MonoBehaviour, IObjectDropHandler
         }
         for (int i = 0; i < PlateList.Count; i++)
         {
-            GameObject.Destroy(PlateList[i]);
+            GameObject.Destroy(PlateList[i].gameObject);
         }
+
+        Children.Clear();
+        PlateList.Clear();
+
         OrderSign.gameObject.SetActive(false);
         BurgerReceived.gameObject.SetActive(false);
         Free = true;
@@ -176,7 +185,13 @@ public class Order : MonoBehaviour, IObjectDropHandler
 
     public void AddToPlate(Item item)
     {
-        GameObject food;
+        if (BurgerReceived.Items.Count == BurgerOrdered.Items.Count)
+        {
+            AddLoafToPlate(BurgerTop);
+            return;
+        }
+
+        Image food;
         switch(item.FType)
         {
             case FoodType.Cheese:
@@ -197,22 +212,27 @@ public class Order : MonoBehaviour, IObjectDropHandler
         switch (item.Level)
         {
             case 0:
-                food = GameObject.Instantiate(Food[FoodTypeColorCode].gameObject);
+                food = GameObject.Instantiate(Food[FoodTypeColorCode].gameObject).GetComponent<Image>();
                 break;
             case 1:
-                food = GameObject.Instantiate(Food[FoodTypeColorCode + 1].gameObject);
+                food = GameObject.Instantiate(Food[FoodTypeColorCode + 1].gameObject).GetComponent<Image>();
                 break;
             case 2:
-                food = GameObject.Instantiate(Food[FoodTypeColorCode + 2].gameObject);
+                food = GameObject.Instantiate(Food[FoodTypeColorCode + 2].gameObject).GetComponent<Image>();
                 break;
             case 3:
-                food = GameObject.Instantiate(Food[FoodTypeColorCode + 3].gameObject);
+                food = GameObject.Instantiate(Food[FoodTypeColorCode + 3].gameObject).GetComponent<Image>();
+                break;
+            default:
+                food = GameObject.Instantiate(Food[FoodTypeColorCode + 3].gameObject).GetComponent<Image>();
                 break;
         }
 
-
+        food.rectTransform.SetParent(Plate.transform);
+        food.rectTransform.anchoredPosition = new Vector2(0, ItemsOnPlateOffset);
         BurgerReceived.Items.Add(item);
-        ItemsOnPlateOffset += 20;
+        PlateList.Add(food);
+        ItemsOnPlateOffset += 25;
     }
 
     public void AddLoafToPlate(Image loaf)
@@ -220,7 +240,7 @@ public class Order : MonoBehaviour, IObjectDropHandler
         Image img = GameObject.Instantiate(loaf.gameObject).GetComponent<Image>();
         img.rectTransform.SetParent(Plate.transform);
         img.rectTransform.anchoredPosition = Vector2.zero;
-        ItemsOnPlateOffset = 20;
+        ItemsOnPlateOffset = 10;
         PlateList.Add(img);
     }
 
@@ -238,7 +258,8 @@ public class Order : MonoBehaviour, IObjectDropHandler
 		if(it != null)
 		{
 			AddToPlate(it);
-		}
+            Destroy(obj);
+        }
 		Debug.Log("Drop shit on plate");
 	}
 
