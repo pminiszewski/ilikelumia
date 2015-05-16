@@ -39,15 +39,17 @@ public class DuckQueue : MonoBehaviour {
         int freePlace = GetFreePlace();
 
         GameObject duckObject = duckList[freePlace] = GameObject.Instantiate(duckPrefab);
+        // duck usage
         Duck duck = duckObject.GetComponent<Duck>();
 
-        duckObject.transform.SetParent(canvas.transform);
+        duckObject.transform.SetParent(transform);
         duckObject.transform.position = ducksSittingPositions[freePlace];
     }
 
     void RemoveDuck(int i)
     {
         Destroy(duckList[i]);
+        currNrOfDucks--;
     }
 
     int GetFreePlace()
