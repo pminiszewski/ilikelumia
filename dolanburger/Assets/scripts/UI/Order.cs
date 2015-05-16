@@ -19,6 +19,7 @@ public class Order : MonoBehaviour
     public Image Vege;
 
     public List<GameObject> Children;
+    public List<Image> PlateList;
 
     // Use this for initialization
     void Start()
@@ -29,6 +30,9 @@ public class Order : MonoBehaviour
     public void CreateOrder(Burger burger)
     {
         BurgerOrdered = burger;
+        AddLoafToPlate(LoafDown, burger.Items.Count);
+        BurgerReceived.gameObject.SetActive(true);
+        
         for (int i = -1; i < burger.Items.Count + 1; i++)
         {
             Image food;
@@ -125,6 +129,22 @@ public class Order : MonoBehaviour
     public void AddToPlate(Item item)
     {
         
+    }
+
+    public void AddLoafToPlate(Image loaf, int empty)
+    {
+       Image img = GameObject.Instantiate(loaf.gameObject).GetComponent<Image>();
+       img.rectTransform.SetParent(Plate.transform);
+
+        for(int i = 0; i < empty + 1; i++)
+        {
+            img = GameObject.Instantiate(loaf.gameObject).GetComponent<Image>();
+            img.rectTransform.SetParent(Plate.transform);
+            img.gameObject.SetActive(false);
+            PlateList.Add(img);
+        }
+
+
     }
 
     // Update is called once per frame

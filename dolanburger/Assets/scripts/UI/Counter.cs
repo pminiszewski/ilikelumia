@@ -12,8 +12,11 @@ public class Counter : MonoBehaviour
 	void Start ()
     {
         AddOrder(GrillTest.CreateRandomBurger());
+        AddOrder(GrillTest.CreateRandomBurger());
+        AddOrder(GrillTest.CreateRandomBurger());
+
     }
-	
+
     public void AddOrder(Burger newOrder)
     {
         for(int i = 0; i < 3; i++)
