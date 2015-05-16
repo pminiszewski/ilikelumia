@@ -8,14 +8,13 @@ public class Bucket : MonoBehaviour
 	public FoodType BucketType;
 
 
-
-	public void OnSpawnItem()
+	public GameObject OnSpawnItem()
 	{
 		GameObject go = Instantiate<GameObject>(ItemPrefab.gameObject);
 		Item i = go.GetComponent<Item>();
 		go.name = "Item_"+i.FType.ToString();
 		i.transform.parent = transform;
-
+		return go;
 	}
 
 }

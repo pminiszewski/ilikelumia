@@ -32,7 +32,7 @@ public class Order : MonoBehaviour
         BurgerOrdered = burger;
         AddLoafToPlate(LoafDown, burger.Items.Count);
         BurgerReceived.gameObject.SetActive(true);
-        
+
         for (int i = -1; i < burger.Items.Count + 1; i++)
         {
             Image food;
@@ -106,9 +106,9 @@ public class Order : MonoBehaviour
 
 	public bool ValidateOrder()
 	{
-		Burger o = BurgerOrdered;
-		Burger r = BurgerReceived;
-		if(o.Items.Count != r.Items.Count)
+		List<Item> o = BurgerOrdered.Items;
+		List<Item> r = BurgerReceived.Items;
+		if(o.Count != r.Count)
 		{
 			return false;
 		}
