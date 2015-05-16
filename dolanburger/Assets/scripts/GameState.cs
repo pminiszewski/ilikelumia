@@ -5,8 +5,10 @@ using UnityEngine.UI;
 public class GameState : MonoBehaviour {
 
     public static int nrOfFailures = 0;
+    public static int score = 0;
+    //public static int nrOfDiamonds = 10;
 
-	public Text TimeText;
+    public Text TimeText;
 	public Text FailuresText;
 	private float _StartTime;
 
@@ -26,11 +28,13 @@ public class GameState : MonoBehaviour {
 		{
 			FailuresText.text = "Failed deliveries: "+ nrOfFailures;
 		}
+        
 	}
 
     static void Reset()
     {
-
+        nrOfFailures = 0;
+        score = 0;
     }
 
 }

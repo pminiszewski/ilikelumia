@@ -145,6 +145,7 @@ public class Order : MonoBehaviour, IObjectDropHandler
 	{
 		List<Item> o = BurgerOrdered.Items;
 		List<Item> r = BurgerRecivedObj.Items;
+        bool hasDiamonds = false;
 		if(o.Count != r.Count)
 		{
 			return false;
@@ -155,9 +156,26 @@ public class Order : MonoBehaviour, IObjectDropHandler
             t &= o[i].Level == r[i].Level;
             t &= o[i].HasDiamond == r[i].HasDiamond;
             if (!t)
-            {
                 return false;
-            }
+            if (r[i].HasDiamond)
+                hasDiamonds = true;
+        }
+        switch (_Duck.duckType)
+        {
+            case Duck.DuckType.Normal:
+                if (hasDiamonds)
+                    GameState.score -= 200;
+                break;
+            case Duck.DuckType.Mafia:
+                if (hasDiamonds)
+                    GameState.score += 200;
+                break;
+            case Duck.DuckType.Police:
+                if (hasDiamonds)
+                    GameState.score -= 500;
+                break;
+            default:
+                break;
         }
         return true;
     }
