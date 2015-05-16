@@ -159,7 +159,11 @@ public class Order : MonoBehaviour, IObjectDropHandler
     }
     public void OrderComplete()
     {
-        ValidateOrder();
+        bool isGood = ValidateOrder();
+        if (!isGood)
+            GameState.nrOfFailures++;
+
+        Queue.ShowCard(_Duck, isGood);
 
         for (int i = 0; i < Children.Count; i++)
         {
