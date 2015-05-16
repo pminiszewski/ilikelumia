@@ -12,7 +12,6 @@ public class Order : MonoBehaviour
     meat:	cc64a7 	89193a  3b1a0c
     tomato:	e00f16 	cf2921  a4321c
     */
-
     string[] ColorCode =
     {
         "f6f229",  "f0cf2e",  "f2a92c",
@@ -41,11 +40,13 @@ public class Order : MonoBehaviour
     public List<Image> PlateList;
 
     private int ItemsOnPlateOffset;
+    DuckQueue Queue;
+    Duck _Duck;
 
     // Use this for initialization
     void Start()
     {
-        
+        Queue = FindObjectOfType<DuckQueue>();
     }
 
     public static Color hexToColor(string hex)
@@ -58,19 +59,19 @@ public class Order : MonoBehaviour
         return new Color32(r, g, b, a);
     }
 
-    public void CreateOrder(Burger burger)
+    public void CreateOrder(Duck duck, int index)
     {
-
+        _Duck = duck;
         for (int i = 0; i < ColorCode.Length; i++)
         {
             Colors.Add(hexToColor(ColorCode[i]));
         }
 
-        BurgerOrdered = burger;
+        BurgerOrdered = duck.burger;
         AddLoafToPlate(BurgerBottom);
         BurgerReceived.gameObject.SetActive(true);
 
-        for (int i = -1; i < burger.Items.Count + 1; i++)
+        for (int i = -1; i < duck.burger.Items.Count + 1; i++)
         {
             Image food;
             if (i == -1)
@@ -80,7 +81,7 @@ public class Order : MonoBehaviour
                 Children.Add(food.gameObject);
                 continue;
             }
-            else if (i == burger.Items.Count)
+            else if (i == duck.burger.Items.Count)
             {
                 food = GameObject.Instantiate(LoafUp.gameObject).GetComponent<Image>();
                 food.rectTransform.SetParent(OrderSign.transform);
@@ -90,7 +91,7 @@ public class Order : MonoBehaviour
 
             food = GameObject.Instantiate(Foodtype.gameObject).GetComponent<Image>();
 
-            switch (burger.Items[i].FType)
+            switch (duck.burger.Items[i].FType)
             {
                 case FoodType.Cheese:
                     FoodTypeColorCode = 0;
@@ -106,7 +107,7 @@ public class Order : MonoBehaviour
                     break;
             }
 
-            switch (burger.Items[i].Level)
+            switch (duck.burger.Items[i].Level)
             {
                 case 0:
                     food.color = Colors[FoodTypeColorCode];
@@ -138,12 +139,25 @@ public class Order : MonoBehaviour
 		{
 			return false;
 		}
-        return false;
+        for (int i = 0; i < r.Count; i++)
+            {
+                bool t = o[i].FType == r[i].FType;
+                t &= o[i].Level == r[i].Level;
+                t &= o[i].HasDiamond == r[i].HasDiamond;
+                if (!t)
+                {
+                    return false;
+                }
+            }
+        return true;
+
 
 
     }
     public void OrderComplete()
     {
+        ValidateOrder();
+
         for (int i = 0; i < Children.Count; i++)
         {
             GameObject.Destroy(Children[i]);
@@ -155,11 +169,12 @@ public class Order : MonoBehaviour
         OrderSign.gameObject.SetActive(false);
         BurgerReceived.gameObject.SetActive(false);
         Free = true;
+        Queue.RemoveDuck(_Duck);
     }
 
     public void AddToPlate(Item item)
     {
-
+        BurgerReceived.Items.Add(item);
         ItemsOnPlateOffset += 20;
     }
 

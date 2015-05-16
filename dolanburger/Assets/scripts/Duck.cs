@@ -34,7 +34,7 @@ public class Duck : MonoBehaviour {
     public Appearance maxNormalAppearance;
     public Appearance maxMafiaAppearance;
     public Appearance maxPoliceAppearance;
-
+    public int PlaceIndex;
     void Start ()
     {
         duckType = GenerateDuckType();

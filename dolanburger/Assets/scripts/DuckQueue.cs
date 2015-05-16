@@ -22,6 +22,7 @@ public class DuckQueue : MonoBehaviour {
 
 	void Start()
     {
+        counter = FindObjectOfType<Counter>();
         canvas = GameObject.Find("Canvas").transform;
         nextDuckSpawnTime = Time.realtimeSinceStartup + minDuckSpawnDelay;
 	}
@@ -42,17 +43,23 @@ public class DuckQueue : MonoBehaviour {
         GameObject duckObject = duckList[freePlace] = GameObject.Instantiate(duckPrefab);
         // duck usage
         Duck duck = duckObject.GetComponent<Duck>();
-
+        duck.PlaceIndex = freePlace;
         duckObject.transform.SetParent(transform);
         duckObject.transform.position = ducksSittingPositions[freePlace];
 
         duck.burger = GrillTest.CreateRandomBurger();
-        counter.AddOrder(duck.burger);
+        counter.AddOrder(duck);
     }
 
-    void RemoveDuck(int i)
+    public void RemoveDuck(int i)
     {
         Destroy(duckList[i]);
+        currNrOfDucks--;
+    }
+
+    public void RemoveDuck(Duck duck)
+    {
+        Destroy(duckList[duck.PlaceIndex]);
         currNrOfDucks--;
     }
 
