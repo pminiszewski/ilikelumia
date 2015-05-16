@@ -176,7 +176,7 @@ public class Order : MonoBehaviour, IObjectDropHandler
 
     public void AddToPlate(Item item)
     {
-        GameObject food;
+        Image food;
         switch(item.FType)
         {
             case FoodType.Cheese:
@@ -197,22 +197,26 @@ public class Order : MonoBehaviour, IObjectDropHandler
         switch (item.Level)
         {
             case 0:
-                food = GameObject.Instantiate(Food[FoodTypeColorCode].gameObject);
+                food = GameObject.Instantiate(Food[FoodTypeColorCode].gameObject).GetComponent<Image>();
                 break;
             case 1:
-                food = GameObject.Instantiate(Food[FoodTypeColorCode + 1].gameObject);
+                food = GameObject.Instantiate(Food[FoodTypeColorCode + 1].gameObject).GetComponent<Image>();
                 break;
             case 2:
-                food = GameObject.Instantiate(Food[FoodTypeColorCode + 2].gameObject);
+                food = GameObject.Instantiate(Food[FoodTypeColorCode + 2].gameObject).GetComponent<Image>();
                 break;
             case 3:
-                food = GameObject.Instantiate(Food[FoodTypeColorCode + 3].gameObject);
+                food = GameObject.Instantiate(Food[FoodTypeColorCode + 3].gameObject).GetComponent<Image>();
+                break;
+            default:
+                food = GameObject.Instantiate(Food[FoodTypeColorCode + 3].gameObject).GetComponent<Image>();
                 break;
         }
 
-
+        food.rectTransform.SetParent(Plate.transform);
+        food.rectTransform.anchoredPosition = new Vector2(0, ItemsOnPlateOffset);
         BurgerReceived.Items.Add(item);
-        ItemsOnPlateOffset += 20;
+        ItemsOnPlateOffset += 25;
     }
 
     public void AddLoafToPlate(Image loaf)
@@ -220,7 +224,7 @@ public class Order : MonoBehaviour, IObjectDropHandler
         Image img = GameObject.Instantiate(loaf.gameObject).GetComponent<Image>();
         img.rectTransform.SetParent(Plate.transform);
         img.rectTransform.anchoredPosition = Vector2.zero;
-        ItemsOnPlateOffset = 20;
+        ItemsOnPlateOffset = 10;
         PlateList.Add(img);
     }
 
@@ -238,7 +242,8 @@ public class Order : MonoBehaviour, IObjectDropHandler
 		if(it != null)
 		{
 			AddToPlate(it);
-		}
+            Destroy(obj);
+        }
 		Debug.Log("Drop shit on plate");
 	}
 
