@@ -14,6 +14,7 @@ public class DuckQueue : MonoBehaviour {
     [SerializeField] GameObject duckPrefab;
     [SerializeField] Vector3[] ducksSittingPositions;
     Transform canvas;
+    Counter counter;
 
     // place on the table, duck
     Dictionary<int, GameObject> duckList = new Dictionary<int, GameObject>();
@@ -44,6 +45,9 @@ public class DuckQueue : MonoBehaviour {
 
         duckObject.transform.SetParent(transform);
         duckObject.transform.position = ducksSittingPositions[freePlace];
+
+        duck.burger = GrillTest.CreateRandomBurger();
+        counter.AddOrder(duck.burger);
     }
 
     void RemoveDuck(int i)
