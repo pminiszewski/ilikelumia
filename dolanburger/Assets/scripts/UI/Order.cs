@@ -33,10 +33,9 @@ public class Order : MonoBehaviour
 
     public Image LoafUp;
     public Image LoafDown;
-    public Image Meat;
-    public Image Tomato;
-    public Image Cheese;
-    public Image Vege;
+    public Image Foodtype;
+
+    public Image BurgerBottom;
 
     public List<GameObject> Children;
     public List<Image> PlateList;
@@ -63,7 +62,7 @@ public class Order : MonoBehaviour
     public void CreateOrder(Burger burger)
     {
         BurgerOrdered = burger;
-        AddLoafToPlate(LoafDown, burger.Items.Count);
+        AddLoafToPlate(BurgerBottom, burger.Items.Count);
         BurgerReceived.gameObject.SetActive(true);
 
         for (int i = -1; i < burger.Items.Count + 1; i++)
@@ -84,26 +83,21 @@ public class Order : MonoBehaviour
                 continue;
             }
 
+            food = GameObject.Instantiate(Foodtype.gameObject).GetComponent<Image>();
+
             switch (burger.Items[i].FType)
             {
                 case FoodType.Cheese:
-                    food = GameObject.Instantiate(Cheese.gameObject).GetComponent<Image>();
                     FoodTypeColorCode = 0;
                     break;
                 case FoodType.Meat:
-                    food = GameObject.Instantiate(Meat.gameObject).GetComponent<Image>();
                     FoodTypeColorCode = 6;
                     break;
                 case FoodType.Tomato:
-                    food = GameObject.Instantiate(Tomato.gameObject).GetComponent<Image>();
                     FoodTypeColorCode = 9;
                     break;
                 case FoodType.Vege:
-                    food = GameObject.Instantiate(Vege.gameObject).GetComponent<Image>();
                     FoodTypeColorCode = 3;
-                    break;
-                default:
-                    food = GameObject.Instantiate(Vege.gameObject).GetComponent<Image>();
                     break;
             }
 
@@ -131,11 +125,6 @@ public class Order : MonoBehaviour
         Free = false;
     }
 
-    public void SetColor(Item item, Image img)
-    {
-
-    }
-
 	public bool ValidateOrder()
 	{
 		List<Item> o = BurgerOrdered.Items;
@@ -150,12 +139,16 @@ public class Order : MonoBehaviour
     }
     public void OrderComplete()
     {
-		
         for (int i = 0; i < Children.Count; i++)
         {
             GameObject.Destroy(Children[i]);
         }
-        this.gameObject.SetActive(false);
+        for (int i = 0; i < PlateList.Count; i++)
+        {
+            GameObject.Destroy(PlateList[i]);
+        }
+        OrderSign.gameObject.SetActive(false);
+        BurgerReceived.gameObject.SetActive(false);
         Free = true;
     }
 
@@ -166,18 +159,9 @@ public class Order : MonoBehaviour
 
     public void AddLoafToPlate(Image loaf, int empty)
     {
-       Image img = GameObject.Instantiate(loaf.gameObject).GetComponent<Image>();
-       img.rectTransform.SetParent(Plate.transform);
-        img.rectTransform.position = Vector3.zero;
-        for(int i = 0; i < empty + 1; i++)
-        {
-            img = GameObject.Instantiate(loaf.gameObject).GetComponent<Image>();
-            img.rectTransform.SetParent(Plate.transform);
-            img.gameObject.SetActive(false);
-            PlateList.Add(img);
-        }
-
-
+        Image img = GameObject.Instantiate(loaf.gameObject).GetComponent<Image>();
+        img.rectTransform.SetParent(Plate.transform);
+        img.rectTransform.anchoredPosition = Vector2.zero;
     }
 
     // Update is called once per frame
