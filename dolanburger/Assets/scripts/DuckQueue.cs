@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -45,11 +45,27 @@ public class DuckQueue : MonoBehaviour {
         Duck duck = duckObject.GetComponent<Duck>();
         duck.PlaceIndex = freePlace;
         duckObject.transform.SetParent(transform);
-        duckObject.transform.position = ducksSittingPositions[freePlace];
+        //duckObject.transform.position = ducksSittingPositions[freePlace];
+		Vector3 pos = ducksSittingPositions[freePlace];
+		pos.x = -20;
+		duckObject.transform.position = pos;
+		StartCoroutine(MoveTo(duck, ducksSittingPositions[freePlace]));
 
         duck.burger = GrillTest.CreateRandomBurger();
         //print("index: " + freePlace + ", burger items: " + duck.burger.Items.Count);
         counter.AddOrder(duck);
+    }
+	IEnumerator MoveTo(Duck d, Vector3 targetPos)
+	{
+		float dist = Vector3.Distance(transform.position, targetPos);
+		while(dist > 0.01f)
+		{
+
+			d.transform.localPosition = Vector3.Lerp(d.transform.localPosition, targetPos, 0.001f * dist);
+			yield return new WaitForSeconds(0.01f);
+        }
+		d.burger = GrillTest.CreateRandomBurger();
+		counter.AddOrder(d);
     }
 
     public void RemoveDuck(int i)
