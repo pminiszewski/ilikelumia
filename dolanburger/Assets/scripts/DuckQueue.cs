@@ -44,12 +44,27 @@ public class DuckQueue : MonoBehaviour {
         Duck duck = duckObject.GetComponent<Duck>();
 
         duckObject.transform.SetParent(transform);
-        duckObject.transform.position = ducksSittingPositions[freePlace];
+        //duckObject.transform.position = ducksSittingPositions[freePlace];
+		Vector3 pos = ducksSittingPositions[freePlace];
+		pos.x = -20;
+		duckObject.transform.position = pos;
+		StartCoroutine(MoveTo(duck, ducksSittingPositions[freePlace]));
 
-        duck.burger = GrillTest.CreateRandomBurger();
-        counter.AddOrder(duck.burger);
+        //duck.burger = GrillTest.CreateRandomBurger();
+        //counter.AddOrder(duck.burger);
     }
+	IEnumerator MoveTo(Duck d, Vector3 targetPos)
+	{
+		float dist = Vector3.Distance(transform.position, targetPos);
+		while(dist > 0.01f)
+		{
 
+			d.transform.localPosition = Vector3.Lerp(d.transform.localPosition, targetPos, 0.001f * dist);
+			yield return new WaitForSeconds(0.01f);
+        }
+		d.burger = GrillTest.CreateRandomBurger();
+		counter.AddOrder(d.burger);
+    }
     void RemoveDuck(int i)
     {
         Destroy(duckList[i]);
