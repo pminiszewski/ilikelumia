@@ -44,7 +44,6 @@ public class DragManager : MonoBehaviour {
 
 	public void DragBeginBucket() 
 	{
-		//draggedObj = currentlyOver;
 		draggedObj = currentlyOver.gameObject.GetComponent<Bucket> ().OnSpawnItem ();
 
 
@@ -53,11 +52,6 @@ public class DragManager : MonoBehaviour {
 
 		var item = draggedObj.gameObject.GetComponent<Item> ();
 		item.dManager = this;
-		//EventTriggerType ett = new EventTriggerType ();
-		//draggedObj.gameObject.GetComponent<EventTrigger> ().delegates [0].eventID = new EventTriggerType ();
-		//
-		//draggedObj.gameObject.GetComponent<EventTrigger> ().delegates [0].callback.AddListener(delegate {DragBegin();} );//(() => { DragBegin(); });
-		//draggedObj.gameObject.GetComponent<EventTrigger> ().delegates [1].callback.AddListener(delegate {DragEnd();} );
 
 		dragStarted = true;
 	}
